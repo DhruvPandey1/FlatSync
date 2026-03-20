@@ -1,0 +1,106 @@
+.card{
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem; 
+}
+
+.cardHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.cardHeader h2{
+    color: #0f172a;
+}
+
+.editBtn{
+    background: #eff6ff;
+    color: #2563eb;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.infoGrid{
+    display: grid;
+    gap: 1.5rem;
+}
+
+.infoItem label{
+    display: block;
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.infoItem p{
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #1e293b;
+    margin: 0;
+}
+
+.input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.saveBtn{
+    width: 100%;
+    margin-top: 2rem;
+    padding: 12px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+.logoutWrapper{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.logoutBtn{
+    width: 100%;
+    max-width: 300px;
+    padding: 12px;
+    background-color: transparent;
+    color: #dc2626;
+    border: 1px solid #fee2e2;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.logoutBtn:hover{
+    background-color: #fef2f2;
+    border-color: #dc2626;
+    transform: translateY(-1px);
+}
+
+.logoutBtn:active{
+    transform: translateY(0);
+}
+
+@media (min-width:768px) {
+    .infoGrid{
+        grid-template-columns: 1fr 1fr;
+    }
+    .logoutBtn{
+        max-width: 100%;
+    }
+}

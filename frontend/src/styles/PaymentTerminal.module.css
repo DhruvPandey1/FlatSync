@@ -1,0 +1,43 @@
+.terminalWrapper{
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.mainPayBtn{
+    width: 100%;
+    padding: 1.25rem;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.4);
+}
+
+.mainPayBtn:hover:not(:disabled){
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.5);
+}
+
+.mainPayBtn:disabled{
+    background-color: #94a3b8;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.disclaimer{
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+.loader{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}

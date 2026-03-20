@@ -1,0 +1,40 @@
+.group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.group label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #64748b;
+}
+
+.group input,
+.group textarea,
+.group select {
+    padding: 0.8rem;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+}
+
+.group textarea {
+    height: 120px;
+    resize: none;
+}
+
+.sendBtn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.sendBtn:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}

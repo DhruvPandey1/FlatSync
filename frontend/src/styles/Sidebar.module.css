@@ -1,0 +1,64 @@
+.sidebar{
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem 0;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.adminBg{
+    background-color: #0f172a;
+    color: white;
+}
+
+.userBg{
+    background-color: #ffffff;
+    color: #1e293b;
+    border-right: 1px solid #e2e8f0;
+}
+
+.brand{
+    padding: 0 2rem 2rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.nav{
+    display: flex;
+    flex-direction: column;
+}
+
+.link{
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: 500;
+    color: inherit;
+    opacity: 0.7;
+    transition: 0.2s;
+}
+
+.link:hover{
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.adminBg .active{
+    background: #2563eb;
+    color: white;
+    opacity: 1;
+    border-right: 4px solid #fff;
+}
+
+.userBg .active{
+    background: #eff6ff;
+    color: #2563eb;
+    opacity: 1;
+    font-weight: 700;
+}

@@ -1,0 +1,16 @@
+.container {
+    padding: 2.5rem;
+    max-width: 800px;
+}
+
+.header h1 {
+    font-size: 2rem;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+

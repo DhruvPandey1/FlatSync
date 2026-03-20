@@ -1,0 +1,4 @@
+.env
+node_modules
+
+Admin/config/flatsync-e39f0-firebase-adminsdk-fbsvc-fcf6b9362a.json

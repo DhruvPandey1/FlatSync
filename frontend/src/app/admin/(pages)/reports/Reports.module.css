@@ -1,0 +1,15 @@
+.container {
+    padding: 2rem;
+    color: #0f172a;
+}
+
+.header h1 {
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+

@@ -1,0 +1,111 @@
+.tableWrapper {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.filterBar {
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  background: #f8fafc;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-right: 1rem;
+}
+
+.selectInput {
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  color: #0f172a;
+}
+
+.table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    text-align: left; 
+}
+.table th { 
+    padding: 1rem; 
+    background: #f1f5f9; 
+    font-size: 0.8rem; 
+    text-transform: uppercase; 
+    color: #64748b; 
+}
+.table td { 
+    padding: 1rem; 
+    border-bottom: 1px solid #f8fafc; 
+}
+
+
+
+.noData { 
+    text-align: center; 
+    padding: 3rem; 
+    color: #94a3b8; 
+}
+
+
+.topBar { 
+    display: flex; 
+    justify-content: space-between; 
+    padding: 1rem; 
+    background: #fff; 
+}
+.addBtn { 
+    background: #0f172a; 
+    color: white; 
+    padding: 10px 20px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #0f172a;
+}
+
+.pagination button:disabled { 
+    opacity: 0.5; 
+    cursor: not-allowed; 
+}
+
+.actions { 
+    display: flex; 
+    gap: 8px; 
+}
+.editBtn { 
+    color: #2563eb; 
+    background: #eff6ff; 
+    border: none; 
+    padding: 4px 10px; 
+    border-radius: 4px; 
+}
+.deleteBtn { 
+    color: #dc2626; 
+    background: #fef2f2; 
+    border: none; 
+    padding: 4px 10px; 
+    border-radius: 4px; 
+}

@@ -1,0 +1,39 @@
+.container {
+  animation: fadeIn 0.4s ease-in;
+  color: #0f172a;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 { 
+    font-size: 1.8rem; 
+    color: #0f172a; 
+}
+.header p { 
+    color: #64748b; 
+    font-size: 0.9rem; 
+}
+
+.tableSection {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(5px); 
+    }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+    }
+}

@@ -1,0 +1,110 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.planCard {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.planLabel {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.details h3 {
+    margin: 4px 0 10px;
+    color: #0f172a;
+}
+
+.amount {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #2563eb;
+}
+
+.amount span {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.miniInput,
+.addForm input {
+    padding: 8px 12px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.miniInput:focus {
+    border-color: #2563eb;
+    outline: none;
+}
+
+.editBtn {
+    background: none;
+    border: 1px solid #e2e8f0;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    color: #0f172a;
+    margin-left: 10px;
+}
+
+.saveBtn,
+.confirmAdd {
+    background: #0f172a;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.cancelBtn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.addPlaceholder {
+    border: 2px dashed #cbd5e1;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.addPlaceholder:hover {
+    border-color: #2563eb;
+    background: #eff6ff;
+}
+
+.trigger {
+    text-align: center;
+    color: #64748b;
+}
+
+.plus {
+    font-size: 2rem;
+    display: block;
+}
