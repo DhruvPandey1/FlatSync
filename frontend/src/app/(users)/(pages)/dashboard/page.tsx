@@ -7,14 +7,12 @@ import FCMHandler from "@/components/fcm/FCMHandler";
 
 async function getDashboardData(){
     const cookieStore=await cookies();
-    // const userId=cookieStore.get('session_id')?.value;
-    const userId="64e155fc-c947-48d7-9814-bbff912e1874"
-    if(!userId) redirect('/login');
+    const token=cookieStore.get('token')?.value;
+    if(!token) redirect('/login');
 
-    const res=await fetch('http://localhost:5000/api/user/dashboard',{
+    const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/dashboard`,{
         headers:{
-            'x-user-id':userId,
-            'x-role':'RESIDENT'
+            'Authorization':`Bearer ${token}`
         },
         next:{revalidate: 0}
     });
@@ -26,14 +24,15 @@ async function getDashboardData(){
 
 export default async function UserDashboard() {
     const data=await getDashboardData();
-    const userId="64e155fc-c947-48d7-9814-bbff912e1874"
     if(!data) return <div className={styles.error}>Error loading dashboard.</div>;
+    const cookieStore=await cookies();
+    const token=cookieStore.get('token')?.value;
 
     const {flat_info,notifications}=data;
 
     return(
         <div className={styles.container}>
-            <FCMHandler userId={userId}/>
+            <FCMHandler authToken={token}/>
             <header className={styles.header}>
                 <h1>Welcome, {flat_info.wing}-{flat_info.flat_number}</h1>
                 <p>Member since {new Date().getFullYear()}</p>

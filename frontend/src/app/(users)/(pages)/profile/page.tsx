@@ -5,16 +5,13 @@ import ProfileForm from '@/components/profile/ProfileForm';
 
 
 async function getUserProfile(){
-    const cookieStore= await cookies();
-    // const userId=cookieStore.get('session_id')?.value;
-    const userId="64e155fc-c947-48d7-9814-bbff912e1874"
+    const cookieStore=await cookies();
+    const token=cookieStore.get('token')?.value;
+    if(!token) redirect('/login');
 
-    if(!userId) redirect('/login');
-
-    const res=await fetch(`http://localhost:5000/api/user/fetch-profile`,{
+    const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/fetch-profile`,{
         headers:{
-            'x-user-id':userId,
-            'x-role':'RESIDENT'
+            'Authorization':`Bearer ${token}`
         },
         cache:'no-store'
     });

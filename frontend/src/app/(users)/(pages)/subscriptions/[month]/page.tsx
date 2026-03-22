@@ -1,16 +1,15 @@
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import styles from './SubscriptionDetail.module.css'
 import ReceiptDownloadBtn from "@/components/payments/ReceiptDownloadBtn";
 import PayButton from "@/components/PayButton";
 async function getRecordDetail(month:string){
     const cookieStore=await cookies();
-    // const userId=cookieStore.get('session_id')?.value;
-    const userId="64e155fc-c947-48d7-9814-bbff912e1874"
-    const res=await fetch(`http://localhost:5000/api/user/subscriptions/${month}`,{
+    const token=cookieStore.get('token')?.value;
+    if(!token) redirect('/login');
+    const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/subscriptions/${month}`,{
         headers:{
-            'x-user-id':userId!,
-            'x-role':'RESIDENT'
+            'Authorization':`Bearer ${token}`
         },
         cache:'no-store'
     });

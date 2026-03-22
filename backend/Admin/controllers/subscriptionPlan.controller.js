@@ -1,10 +1,8 @@
-const db=require('../../db/db')
+const { getPlanService, addPlanService, updatePlanService } = require('../../db/services/subscriptionPlan.service');
 
 const getPlanRate=async(req,res)=>{
     try{
-        const plan= await db.query(
-            'SELECT * FROM flat_types'
-        );
+        const plan= await getPlanService();
 
         res.json(plan.rows);
     }
@@ -16,10 +14,7 @@ const getPlanRate=async(req,res)=>{
 const addPlanType = async (req, res) => {
     const { name, monthly_rate } = req.body;
     try {
-        const result = await db.query(
-            'INSERT INTO flat_types (name, monthly_rate) VALUES ($1, $2) RETURNING *',
-            [name, monthly_rate]
-        );
+        const result = await addPlanService(name,monthly_rate);
         res.status(201).json(result.rows[0]);
     } catch (err) {
         res.status(500).json({ error: err.message});
@@ -29,10 +24,7 @@ const addPlanType = async (req, res) => {
 const updatePlanRate=async(req,res)=>{
     const {type_id,new_rate}=req.body;
     try{
-        await db.query(
-            'UPDATE flat_types SET monthly_rate=$1 WHERE id=$2',
-            [new_rate,type_id]
-        );
+        await updatePlanService(new_rate,type_id)
 
         res.json({
             message:"Plan rate updated successfully."

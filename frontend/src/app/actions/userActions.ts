@@ -15,7 +15,7 @@ export async function updateProfile(formData:FormData,intialData:any) {
     console.log(full_name,email,password)
 
     try{
-        const res=await fetch('http://localhost:5000/api/user/profile',{
+        const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile`,{
             method:'PUT',
             headers:{
                 'Content-Type':'application/json',

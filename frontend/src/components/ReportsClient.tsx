@@ -4,7 +4,7 @@ import styles from '@/styles/ReportsClient.module.css';
 export default function ReportsClient({ summary, currentMonth, currentYear }: any) {
   
   const handleDownload = (type: 'csv' | 'pdf') => {
-    const downloadUrl = `http://localhost:5000/api/admin/export-report?type=${type}&month=${currentMonth}&year=${currentYear}`;
+    const downloadUrl = `${process.env.NEXT_PUBLIC_API_URL}/admin/export-report?type=${type}&month=${currentMonth}&year=${currentYear}`;
     window.open(downloadUrl, '_blank');
   };
 

@@ -2,7 +2,7 @@
 
 export default function ReceiptDownloadBtn({month}:{month:string}){
     const handleDownload =async ()=>{
-        window.open(`http://localhost:5000/api/user/subscriptions/${month}/download`,'_blank');
+        window.open(`${process.env.NEXT_PUBLIC_API_URL}/user/subscriptions/${month}/download`,'_blank');
     };
 
     return(

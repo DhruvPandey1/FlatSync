@@ -13,7 +13,7 @@ export default function PlanRates({ initialPlans }: { initialPlans: any[] }) {
 
   const handleUpdate = async (id: number) => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/update-plan-rate', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/update-plan-rate`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' ,"x-role":"ADMIN"},
         body: JSON.stringify({ type_id: id, new_rate: Number(tempRate) })
@@ -28,7 +28,7 @@ export default function PlanRates({ initialPlans }: { initialPlans: any[] }) {
   const handleAddPlan = async () => {
     if (!newPlan.name || !newPlan.rate) return alert("Fill all fields");
     try {
-      const res = await fetch('http://localhost:5000/api/admin/add-plan-type', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/add-plan-type`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' ,"x-role":"ADMIN"},
         body: JSON.stringify({ name: newPlan.name, monthly_rate: Number(newPlan.rate) })

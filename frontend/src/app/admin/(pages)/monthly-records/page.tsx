@@ -1,8 +1,13 @@
 import MonthlyRecordsClient from '@/components/MonthlyRecordsClient';
+import { cookies } from 'next/headers';
 
 async function getMonthlyData(month: string, year: string) {
-  const res = await fetch(`http://localhost:5000/api/admin/monthly-reports?month=${month}&year=${year}`, {
-    headers: { 'x-role': 'ADMIN' },
+  const cookieStore= await cookies();
+  const token=cookieStore.get('admin_token')?.value
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/monthly-reports?month=${month}&year=${year}`, {
+    headers: {
+      'Authorization':`Bearer ${token}`
+    },
     cache: 'no-store'
   });
   if (!res.ok) return [];

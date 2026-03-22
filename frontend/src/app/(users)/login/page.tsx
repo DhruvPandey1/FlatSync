@@ -1,6 +1,11 @@
+import { cookies } from 'next/headers';
 import styles from './login.module.css';
 import LoginForm from '@/components/auth/LoginForm';
-export default function LoginPage(){
+import { redirect } from 'next/navigation';
+export default async function LoginPage(){
+    const cookieStore=await cookies();
+    const token=cookieStore.get('token')?.value;
+    if(token) redirect("/dashboard");
     return(
         <div className={styles.container}>
             <div className={styles.card}>

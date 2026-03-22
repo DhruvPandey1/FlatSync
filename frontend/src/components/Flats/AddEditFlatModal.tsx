@@ -17,7 +17,8 @@ export default function AddEditFlatModal({ isOpen, onClose, editData, refreshDat
     
     const res = await fetch(`http://localhost:5000${endpoint}`, {
       method,
-      headers: { 'Content-Type': 'application/json' , "x-role":"ADMIN"},
+      headers: { 'Content-Type': 'application/json' },
+      credentials:"include",
       body: JSON.stringify(form)
     });
 

@@ -1,9 +1,12 @@
 import ProfileForm from '@/components/profile/admin/ProfileForm';
 import styles from './Profile.module.css';
+import { cookies } from 'next/headers';
 
 async function getAdminData() {
-  const res = await fetch('http://localhost:5000/api/admin/me', {
-    headers: { 'x-role': 'ADMIN' },
+  const cookieStore=await cookies();
+  const token=cookieStore.get('admin_token')?.value;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/me`, {
+    headers: { 'Authorization':`Bearer ${token}`},
     cache: 'no-store'
   });
   if (!res.ok) return null;

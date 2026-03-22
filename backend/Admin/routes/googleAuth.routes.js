@@ -1,6 +1,7 @@
 const express = require ("express");
 const passport = require ("passport");
 const pool = require ("../../db/db");
+const jwt=require('jsonwebtoken');
 
 const router = express.Router();
 
@@ -19,7 +20,6 @@ router.get("/googleAuth/callback", (req, res, next) => {
       }
 
       const email = googleUser.email;
-      const token=googleUser.token;
 
       const result = await pool.query(
         "SELECT * FROM users WHERE email = $1 AND role = $2",
@@ -32,23 +32,22 @@ router.get("/googleAuth/callback", (req, res, next) => {
         return res.redirect("http://localhost:3000/admin/login?error=User not found");
       }
 
-      res.cookie("role", "ADMIN", {
+
+      const token=jwt.sign(
+        {
+          id:admin.id,
+          email:admin.email,
+          role:"ADMIN"
+        },
+        process.env.JWT_SECRET,
+        {expiresIn:"1d"}
+      );
+
+      res.cookie("admin_token", token, {
         httpOnly: true,
         secure: false,
-        sameSite: "none",
+        sameSite: "lax",
       });
-
-      res.cookie("email", admin.email, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "none",
-      });
-
-      res.cookie("token",token,{
-        httpOnly:true,
-        secure:false,
-        sameSite:"none"
-      })
 
       return res.redirect("http://localhost:3000/admin/dashboard");
     } catch (err) {
@@ -57,8 +56,5 @@ router.get("/googleAuth/callback", (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/me", (req, res) => {
-  res.json(req.user || null);
-});
 
 module.exports=router;

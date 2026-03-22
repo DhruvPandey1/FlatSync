@@ -1,10 +1,13 @@
 import FlatsTable from '@/components/Flats/FlatsTable';
 import styles from './Flats.module.css';
+import { cookies } from 'next/headers';
 
 async function getFlatData() {
-    const res=await fetch('http://localhost:5000/api/admin/flats',{
+    const cookieStore= await cookies();
+    const token=cookieStore.get('admin_token')?.value
+    const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/flats`,{
         headers:{
-            "x-role":"ADMIN"
+            "Authorization":`Bearer ${token}`
         },
         cache:'no-store'
     });

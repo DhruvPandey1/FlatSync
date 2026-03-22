@@ -11,10 +11,8 @@ export default function PaymentEntry() {
     if(!searchTerm) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/pending-by-flat?q=${searchTerm}`,{
-        headers:{
-            "x-role":"ADMIN"
-        },
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/pending-by-flat?q=${searchTerm}`,{
+        credentials:"include",
         cache:"no-store"
       });
       const data = await res.json();
@@ -30,9 +28,10 @@ export default function PaymentEntry() {
     const method = confirm("Was this a Cash payment? (Cancel for UPI)") ? 'CASH' : 'UPI';
     
     try {
-      const res = await fetch('http://localhost:5000/api/admin/manual-payment', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/manual-payment`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' ,"x-role":"ADMIN"},
+        headers: { 'Content-Type': 'application/json' },
+        credentials:"include",
         body: JSON.stringify({ record_id: recordId, amount_paid: amount, method })
       });
       

@@ -1,16 +1,18 @@
+
 import { cookies } from 'next/headers';
 import styles from './Dashboard.module.css';
+import { redirect } from 'next/navigation';
 
 async function getAdminStats() {
-    const cookieStore=await cookies();
-    const token=cookieStore.get('admin_token')?.value;
-
-    const res=await fetch('http://localhost:5000/api/admin/dashboard',{
+    const cookieStore= await cookies();
+    const token=cookieStore.get('admin_token')?.value
+    if(!token) redirect('/admin/login');
+    
+    const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/dashboard`,{
+        cache:'no-store',
         headers:{
-            'Authorization':`Bearer ${token}`,
-            'x-role':'ADMIN'
-        },
-        cache:'no-store'
+            'Authorization':`Bearer ${token}`
+        }
     })
 
     if(!res.ok) return null;

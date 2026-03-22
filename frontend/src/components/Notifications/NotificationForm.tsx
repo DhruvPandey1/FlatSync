@@ -10,9 +10,10 @@ export default function NotificationForm() {
     e.preventDefault();
     setLoading(true);
 
-    const res = await fetch('http://localhost:5000/api/admin/send-notification', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/send-notification`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-role': 'ADMIN' },
+      headers: { 'Content-Type': 'application/json'},
+      credentials:"include",
       body: JSON.stringify(msg)
     });
 

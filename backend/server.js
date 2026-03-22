@@ -1,4 +1,5 @@
 const express = require("express")
+const cookie=require("cookie-parser");
 const cors = require("cors")
 require("dotenv").config()
 
@@ -19,7 +20,7 @@ app.use(cors({
   origin:'http://localhost:3000',
   credentials:true
 }))
-
+app.use(cookie());
 app.use(express.json())
 app.use(passport.initialize())
 

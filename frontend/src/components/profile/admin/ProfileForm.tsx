@@ -4,7 +4,7 @@ import styles from './ProfileForm.module.css';
 
 export default function ProfileForm({ initialData }: any) {
   const [formData, setFormData] = useState({
-    name: initialData?.name || '',
+    name: initialData?.full_name || '',
     email: initialData?.email || '',
     oldPassword: '',
     newPassword: '',
@@ -19,9 +19,10 @@ export default function ProfileForm({ initialData }: any) {
       return;
     }
 
-    const res = await fetch('http://localhost:5000/api/admin/update-profile', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/update-profile`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' ,"x-role":"ADMIN"},
+      headers: { 'Content-Type': 'application/json' },
+      credentials:"include",
       body: JSON.stringify(formData)
     });
 

@@ -4,12 +4,10 @@ import PaymentTerminal from '@/components/payments/PaymentTerminal';
 
 async function getPaymentDetails(month:string,isCumulative:boolean) {
     const cookieStore=await cookies();
-    // const userId=cookieStore.get('session_id')?.value;
-    const userId="64e155fc-c947-48d7-9814-bbff912e1874"
-    const res=await fetch(`http://localhost:5000/api/user/payments/details?month=${month}&all=${isCumulative}`,{
+    const token=cookieStore.get('token')?.value;
+    const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/payments/details?month=${month}&all=${isCumulative}`,{
         headers:{
-            'x-user-id':userId||''
-            ,'x-role':'RESIDENT'
+            'Authorization':`Bearer ${token}`
         },
         cache:'no-store'
     })

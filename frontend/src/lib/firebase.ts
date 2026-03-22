@@ -3,19 +3,19 @@ import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
 
-  apiKey: "AIzaSyB8mGsYEFxpuR1lLmLuS19tZH07-FyiNLw",
+  apiKey: process.env.NEXT_PUBLIC_FB_API_KEY,
 
-  authDomain: "flatsync-e39f0.firebaseapp.com",
+  authDomain: process.env.NEXT_PUBLIC_FB_AUTH_DOMAIN,
 
-  projectId: "flatsync-e39f0",
+  projectId: process.env.NEXT_PUBLIC_FB_PROJECT_ID,
 
-  storageBucket: "flatsync-e39f0.firebasestorage.app",
+  storageBucket: process.env.NEXT_PUBLIC_FB_STORAGE_BUCKET,
 
-  messagingSenderId: "619139046007",
+  messagingSenderId: process.env.NEXT_PUBLIC_FB_MESSAGE_SENDER_ID,
 
-  appId: "1:619139046007:web:f42b553b42f942f65dc472",
+  appId: process.env.NEXT_PUBLIC_FB_APP_ID,
 
-  measurementId: "G-HZKHKDPGWH"
+  measurementId: process.env.NEXT_PUBLIC_FB_MESUREMENT_ID
 
 };
 
@@ -26,7 +26,7 @@ export const messaging = typeof window !== "undefined" ? getMessaging(app) : nul
 export const requestForToken = async () => {
   if (!messaging) return;
   try {
-    const token = await getToken(messaging, { vapidKey: 'YOUR_VAPID_KEY' });
+    const token = await getToken(messaging, { vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY });
     if (token) {
       console.log('Token generated:', token);
       return token;

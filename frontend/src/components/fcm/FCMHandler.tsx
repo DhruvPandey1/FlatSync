@@ -2,30 +2,28 @@
 
 import { useEffect } from "react";
 import { getMessaging, getToken } from "firebase/messaging";
-import { app } from "@/lib/firebase"; // Tera Firebase initialization file
+import { app } from "@/lib/firebase";
 
-export default function FCMHandler({userId}:any) {
+export default function FCMHandler({authToken}:any) {
   useEffect(() => {
     const setupFCM = async () => {
       try {
-        // 1. Browser se permission maango
+
         const permission = await Notification.requestPermission();
         
         if (permission === "granted") {
           const messaging = getMessaging(app);
-          
-          // 2. Token generate karo
+
           const token = await getToken(messaging, {
-            vapidKey: "BHfuUZyP8Nrpu9rlXMtv056qG5mnqfvi1M8aS0YBBDH53n7G64bnrdYgtXXeECsbEMfdh2OhcV0hxlKXKQoH7_U" // Firebase Console se uthao
-          });
+            vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY
+          } ) 
 
           if (token) {
-            // 3. Backend (Node.js) ko token bhej do
-            await fetch("http://localhost:5000/api/user/save-fcm-token", {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/save-fcm-token`, {
               method: "POST",
-              headers: { "Content-Type": "application/json" ,"x-user-id":userId},
+              headers: { "Content-Type": "application/json" ,'Authorization':`Bearer ${authToken}`},
               body: JSON.stringify({ fcm_token: token }),
-              credentials: "include", // Taaki backend ko session/cookie mil jaye
+              credentials: "include",
             });
             console.log("FCM Token synced!");
           }
@@ -38,5 +36,5 @@ export default function FCMHandler({userId}:any) {
     setupFCM();
   }, []);
 
-  return null; // Ye kuch render nahi karega
+  return null; 
 }

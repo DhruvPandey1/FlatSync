@@ -21,10 +21,8 @@ export default function FlatsTable({ initialData = [] }: { initialData: any[] })
         return;
     }
 
-    const res = await fetch(`http://localhost:5000/api/admin/search-flats?q=${searchTerm}&wing=${wing}`,{
-        headers:{
-            "x-role":"ADMIN"
-        }
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/search-flats?q=${searchTerm}&wing=${wing}`,{
+        credentials:"include"
     });
     const data = await res.json();
     setFlats(Array.isArray(data) ? data : []);
@@ -38,7 +36,7 @@ export default function FlatsTable({ initialData = [] }: { initialData: any[] })
 
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this flat?")) return;
-    const res = await fetch(`http://localhost:5000/api/admin/flats/${id}`, { method: 'DELETE' ,headers:{"x-role":"ADMIN"}});
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/flats/${id}`, { method: 'DELETE' ,credentials:"include"});
     if (res.ok) fetchFlats();
   };
 

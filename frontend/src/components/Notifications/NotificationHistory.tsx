@@ -9,8 +9,8 @@ export default function NotificationHistory() {
   useEffect(() => {
     async function fetchHistory() {
       try {
-        const res = await fetch('http://localhost:5000/api/admin/notification-history', {
-          headers: { 'x-role': 'ADMIN' }
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/notification-history`, {
+          credentials:"include"
         });
         const data = await res.json();
         setHistory(data);

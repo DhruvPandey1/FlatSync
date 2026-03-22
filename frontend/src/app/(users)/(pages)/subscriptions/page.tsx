@@ -4,15 +4,13 @@ import styles from './subscriptions.module.css'
 import Link from "next/link";
 
 async function getSubscriptionHistory() {
-    const cookieStore= await cookies();
-    // const userId=cookieStore.get('session_id')?.value;
-    const userId="64e155fc-c947-48d7-9814-bbff912e1874"
-    if(!userId) redirect('/login');
+    const cookieStore=await cookies();
+    const token=cookieStore.get('token')?.value;
+    if(!token) redirect('/login');
 
-    const res=await fetch('http://localhost:5000/api/user/subscriptions',{
+    const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/subscriptions`,{
         headers:{
-            'x-user-id':userId,
-            'x-role':'RESIDENT'
+            'Authorization':`Bearer ${token}`
         },
         cache:'no-store'
     });

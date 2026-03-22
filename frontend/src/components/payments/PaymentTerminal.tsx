@@ -16,7 +16,7 @@ export default function PaymentTerminal({amount,month,isCumulative}:PaymentProps
         setLoading(true);
 
         try{
-            const orderRes=await fetch('http://localhost:5000/api/user/create-order',{
+            const orderRes=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/create-order`,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
@@ -35,7 +35,7 @@ export default function PaymentTerminal({amount,month,isCumulative}:PaymentProps
                 description:isCumulative?"Clearing All Dues":`Payment for ${month}`,
                 order_id:orderData.id,
                 handler:async function (response:any) {
-                    const verifyRes=await fetch('http://localhost:5000/api/user/verify-payment',{
+                    const verifyRes=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/verify-payment`,{
                         method:'POST',
                         headers:{
                             'Content-Type':'application/json'

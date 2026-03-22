@@ -1,10 +1,13 @@
 import PlanRates from '@/components/PlanRates';
 import styles from './Subscriptions.module.css';
+import { cookies } from 'next/headers';
 
 async function getPlanTypes() {
-  const res = await fetch('http://localhost:5000/api/admin/plan-types', {
+  const cookieStore=await cookies();
+  const token= cookieStore.get('admin_token')?.value;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/plan-types`, {
     headers:{
-        "x-role":"ADMIN"
+      "Authorization":`Bearer ${token}`
     },
     cache: 'no-store' 
   });

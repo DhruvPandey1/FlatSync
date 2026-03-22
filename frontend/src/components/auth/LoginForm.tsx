@@ -25,10 +25,7 @@ export default function LoginForm({type}:Role){
     }
 
     const handleGoogleLogin = async() => {
-        const data=new FormData();
-        data.append('loginType',type)
-        window.location.href = "http://localhost:5000/api/googleAuth";
-        const result =await loginAction(data)
+        window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/googleAuth`;
     };
 
     return(

@@ -1,14 +1,11 @@
-const db=require('../../db/db');
+const { notificationReadService, fcmTokenService } = require('../../db/services/notification.service');
 
 
 const markNotificationRead=async(req,res)=>{
     const {notificationId}=req.query;
     const userId=req.user.id;
     try{
-        const result=await db.query(
-            'UPDATE notifications SET is_read=true WHERE id=$1 AND user_id=$2',
-            [notificationId,userId]
-        );
+        const result=await notificationReadService(notificationId,userId);
 
         if(result.rowCount===0){
             return res.status(404).json({message:"No record Found"})
@@ -28,10 +25,7 @@ const createfcmToken=async (req, res) => {
     
 
     try {
-        await db.query(
-            'UPDATE users SET fcm_token = $1 WHERE id = $2', 
-            [fcm_token, user_id]
-        );
+        await fcmTokenService(fcm_token,user_id);
         res.status(200).json({ message: "Token saved" });
     } catch (err) {
         res.status(500).json({ error: "Failed to save token" });

@@ -1,5 +1,5 @@
 const express=require('express');
-const {isAdmin}=require('../middleware/auth');
+const {verifyAdmin}=require('../middleware/verifyAdmin');
 const { generateMonthlyBills } = require('../utils/billingUtils');
 const dashboardRoutes=require('./dashboard.routes');
 const flatRoutes=require('./flats.routes');
@@ -7,11 +7,12 @@ const subscriptionRoutes=require('./subscriptionPlan.routes');
 const monthlyRecordRoutes=require('./monthlyRecord.routes');
 const manualPaymentRoutes=require('./manualPayment.routes');
 const notificationRoutes=require('./notification.routes');
+const userRoute=require('./User.routes');
 const router=express.Router();
 
-router.use(isAdmin);
+router.use(verifyAdmin);
 
-
+router.use('/',userRoute)
 router.use('/',dashboardRoutes)
 router.use('/',flatRoutes)
 router.use('/',subscriptionRoutes)
