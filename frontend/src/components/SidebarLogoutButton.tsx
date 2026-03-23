@@ -29,6 +29,7 @@ export default function SidebarLogoutButton({ role }: { role: 'ADMIN' | 'RESIDEN
         </svg>
         {isPending ? 'Logging Out...' : 'Log Out'}
       </button>
+      
     </div>
   );
 }

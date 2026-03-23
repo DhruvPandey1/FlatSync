@@ -1,4 +1,7 @@
 const db=require('../../db/db');
+const PDFDocument=require('pdfkit');
+const { getPaymentDetailsAllService } = require('../../db/services/payment.service');
+
 
 
 
@@ -8,14 +11,7 @@ const getPaymentDetails=async(req,res)=>{
 
     try{
         if(all==='true'){
-            const amount=await db.query(`
-                SELECT 
-                    (SELECT SUM(amount_due) FROM subscription_records WHERE flat_id=f.id AND status='PENDING') as total_pending_debt
-                FROM flats f
-                WHERE f.owner_id=$1
-                `,
-                [userId]
-            );
+            const amount=await getPaymentDetailsAllService(userId)
             res.json({total_amount:amount.rows[0].total_pending_debt});
         }
 
@@ -85,7 +81,7 @@ const mockPayment = async (req, res) => {
 
 const downloadReceipt=async(req,res)=>{
     const month=req.params.id;
-
+    const userId=req.user.id;
     try{
         const result=await db.query(`
             SELECT sr.*,u.full_name,u.email,f.flat_number,f.wing,p.transaction_id,p.amount_paid
@@ -93,11 +89,9 @@ const downloadReceipt=async(req,res)=>{
             JOIN subscription_records sr ON p.record_id=sr.id
             JOIN flats f ON sr.flat_id=f.id
             JOIN users u ON f.owner_id=u.id
-            WHERE sr.billing_month=$1
-            `,[month]
+            WHERE sr.billing_month=$1 AND u.id=$2
+            `,[month,userId]
         );
-
-        console.log(result)
 
         if(result.rows.length===0){
             return res.status(404).send("Receipt not found")

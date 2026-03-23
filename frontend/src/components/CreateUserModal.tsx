@@ -11,7 +11,6 @@ export default function CreateUserModal() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
     role: 'RESIDENT',
   });
 
@@ -36,7 +35,7 @@ export default function CreateUserModal() {
 
       if (res.ok) {
         setMessage({ text: 'User created successfully', type: 'success' });
-        setFormData({ name: '', email: '', password: '', role: 'RESIDENT' });
+        setFormData({ name: '', email: '', role: 'RESIDENT' });
         setTimeout(() => setIsOpen(false), 2000);
       } else {
         const errorData = await res.json().catch(() => ({}));
@@ -80,19 +79,12 @@ export default function CreateUserModal() {
                 <input required type="email" name="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" />
               </div>
 
-              <div className={styles.row}>
-                <div className={styles.inputGroup}>
-                  <label>Password</label>
-                  <input required type="password" name="password" value={formData.password} onChange={handleChange} placeholder="••••••••" />
-                </div>
-                
-                <div className={styles.inputGroup}>
-                  <label>Role</label>
-                  <select name="role" value={formData.role} onChange={handleChange} required>
-                    <option value="RESIDENT">Resident</option>
-                    <option value="ADMIN">Admin</option>
-                  </select>
-                </div>
+              <div className={styles.inputGroup}>
+                <label>Role</label>
+                <select name="role" value={formData.role} onChange={handleChange} required>
+                  <option value="RESIDENT">Resident</option>
+                  <option value="ADMIN">Admin</option>
+                </select>
               </div>
 
               {message.text && (

@@ -12,12 +12,10 @@ const generateMonthlyBills=async(billingMonth)=>{
                 f.id as flat_id,
                 $1::DATE as billing_month,
                 CASE 
-                    -- If user created mid-month of the billing_month
                     WHEN DATE_TRUNC('month', u.created_at) = DATE_TRUNC('month', $1::DATE) THEN
                         ROUND(ft.monthly_rate * (
                             EXTRACT(DAY FROM (DATE_TRUNC('month', $1::DATE) + INTERVAL '1 month - 1 day')) - EXTRACT(DAY FROM u.created_at) + 1
                         ) / EXTRACT(DAY FROM (DATE_TRUNC('month', $1::DATE) + INTERVAL '1 month - 1 day'))::NUMERIC, 2)
-                    -- Else standard rate
                     ELSE ft.monthly_rate
                 END as amount_due,
                 'PENDING' as status

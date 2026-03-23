@@ -1,15 +1,35 @@
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 const { createUserService,getAdminDetailsService, updateAdminDetailsService } = require("../../db/services/auth.service");
 
 
 
 const createUser=async(req,res)=>{
     try{
-        const {name,email,role,password}=req.body
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const {name,email,role}=req.body;
+        const generatedPassword = crypto.randomBytes(8).toString('hex');
+        const hashedPassword = await bcrypt.hash(generatedPassword, 10);
         const result=await createUserService(email,name,role,hashedPassword);
 
-        res.json({...result.rows,hashedPassword:password});
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: 'Your Account Password',
+            text: `Hello ${name},\n\nYour account has been created. Your password is: ${generatedPassword}\n\nPlease login and change your password.\n\nThanks!`
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        res.json({...result.rows, message: "User created and password emailed successfully"});
     }
     catch(err){
         res.status(500).json({message:"User Not Created",error:err.message})
