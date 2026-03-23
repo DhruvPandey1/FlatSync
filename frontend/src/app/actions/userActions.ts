@@ -5,8 +5,7 @@ import { cookies } from "next/headers";
 
 export async function updateProfile(formData:FormData,intialData:any) {
     const cookieStore=await cookies();
-    const userId="64e155fc-c947-48d7-9814-bbff912e1874"
-
+    const token = cookieStore.get('token')?.value;
 
     const email=formData.get('email')||intialData.email;
     const full_name=formData.get('name') || intialData.full_name;
@@ -17,7 +16,7 @@ export async function updateProfile(formData:FormData,intialData:any) {
             method:'PUT',
             headers:{
                 'Content-Type':'application/json',
-                'x-user-id':userId||''
+                'Authorization': `Bearer ${token}`
             },
             body:JSON.stringify({email,password,full_name})
         });

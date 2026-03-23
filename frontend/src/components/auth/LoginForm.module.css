@@ -1,20 +1,20 @@
-.form{
-    background-color:white;
+.form {
+    background-color: white;
     padding: 2.5rem;
     border-radius: 12px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) , 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
 }
 
-.form h2{
+.form h2 {
     margin-bottom: 1.5rem;
     color: #1e293b;
     font-size: 1.75rem;
     text-align: center;
 }
 
-.error{
+.error {
     background-color: #fef2f2;
     color: #dc2626;
     padding: 0.75rem;
@@ -24,11 +24,11 @@
     border: 1px solid #fee2e2;
 }
 
-.inputGroup{
+.inputGroup {
     margin-bottom: 1.25rem;
 }
 
-.inputGroup label{
+.inputGroup label {
     display: block;
     font-size: 0.875rem;
     font-weight: 600;
@@ -36,7 +36,7 @@
     margin-bottom: 0.5rem;
 }
 
-.inputGroup input{
+.inputGroup input {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #cbd5e1;
@@ -45,13 +45,13 @@
     transition: border-color 0.2s;
 }
 
-.inputGroup input:focus{
+.inputGroup input:focus {
     outline: none;
     border-color: #2563eb;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-.form button{
+.form button {
     width: 100%;
     padding: 0.75rem;
     background-color: #2563eb;
@@ -64,11 +64,11 @@
     transition: background-color 0.2s;
 }
 
-.form button:hover{
+.form button:hover {
     background-color: #1d4ed8;
 }
 
-.form button:disabled{
+.form button:disabled {
     background-color: #94a3b8;
     cursor: not-allowed;
 }

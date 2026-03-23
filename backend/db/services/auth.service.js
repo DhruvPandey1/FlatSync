@@ -42,9 +42,18 @@ const updateAdminDetailsService=async(name,oldPassword,newPassword,adminId)=>{
     return update
     
 }
+const getAdminByEmailService = async(email) => {
+    const res = await db.query(
+        "SELECT * FROM users WHERE email = $1 AND role = $2",
+        [email, "ADMIN"]
+    );
+    return res;
+}
+
 module.exports={
     userLoginService,
     createUserService,
     getAdminDetailsService,
-    updateAdminDetailsService
+    updateAdminDetailsService,
+    getAdminByEmailService
 }

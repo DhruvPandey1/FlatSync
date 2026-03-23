@@ -1,9 +1,10 @@
-const db=require('../../db/db');
 const PDFDocument=require('pdfkit');
-const { getPaymentDetailsAllService } = require('../../db/services/payment.service');
-
-
-
+const { 
+    getPaymentDetailsAllService, 
+    getPaymentDetailsMonthService, 
+    mockPaymentTransactionService, 
+    getReceiptDetailsService 
+} = require('../../db/services/payment.service');
 
 const getPaymentDetails=async(req,res)=>{
     const {month,all}=req.query;
@@ -14,68 +15,26 @@ const getPaymentDetails=async(req,res)=>{
             const amount=await getPaymentDetailsAllService(userId)
             res.json({total_amount:amount.rows[0].total_pending_debt});
         }
-
         else{
-            const result=await db.query(
-                `SELECT sr.*,p.amount_paid,p.method,p.transaction_id,p.paid_at
-                FROM subscription_records sr
-                JOIN flats f ON sr.flat_id=f.id
-                LEFT JOIN payments p ON sr.id=p.record_id
-                WHERE sr.billing_month=$1 AND f.owner_id=$2
-                `,[month,userId]
-            );
-
+            const result = await getPaymentDetailsMonthService(month, userId);
             res.json({total_amount:result.rows[0]?.amount_due});
         }
     }
     catch(err){
         res.status(500).json({error:err.message});
     }
-
 }
 
 const mockPayment = async (req, res) => {
     const { month, isCumulative } = req.body;
     const userId = req.user.id;
 
-    const client = await db.connect();
     try {
-        await client.query('BEGIN');
-        
-        let pendingRecords;
-        if(isCumulative) {
-            pendingRecords = await client.query(
-                `SELECT sr.id, sr.amount_due FROM subscription_records sr JOIN flats f ON sr.flat_id = f.id WHERE f.owner_id = $1 AND sr.status = 'PENDING'`, 
-                [userId]
-            );
-        } else {
-            pendingRecords = await client.query(
-                `SELECT sr.id, sr.amount_due FROM subscription_records sr JOIN flats f ON sr.flat_id = f.id WHERE f.owner_id = $1 AND sr.billing_month = $2 AND sr.status = 'PENDING'`, 
-                [userId, month]
-            );
-        }
-
-        const transactionId = `TXN_${Date.now()}_${Math.floor(Math.random()*1000)}`;
-
-        for (const record of pendingRecords.rows) {
-            await client.query(
-                `INSERT INTO payments (record_id, amount_paid, method, transaction_id) VALUES ($1, $2, 'UPI', $3)`,
-                [record.id, record.amount_due, transactionId]
-            );
-            await client.query(
-                `UPDATE subscription_records SET status = 'PAID' WHERE id = $1`,
-                [record.id]
-            );
-        }
-
-        await client.query('COMMIT');
+        const transactionId = await mockPaymentTransactionService(userId, month, isCumulative);
         res.json({success: true, transactionId});
     } catch(err) {
-        await client.query('ROLLBACK');
         console.error(err);
         res.status(500).json({success: false, error: err.message});
-    } finally {
-        client.release();
     }
 }
 
@@ -83,15 +42,7 @@ const downloadReceipt=async(req,res)=>{
     const month=req.params.id;
     const userId=req.user.id;
     try{
-        const result=await db.query(`
-            SELECT sr.*,u.full_name,u.email,f.flat_number,f.wing,p.transaction_id,p.amount_paid
-            FROM payments p 
-            JOIN subscription_records sr ON p.record_id=sr.id
-            JOIN flats f ON sr.flat_id=f.id
-            JOIN users u ON f.owner_id=u.id
-            WHERE sr.billing_month=$1 AND u.id=$2
-            `,[month,userId]
-        );
+        const result = await getReceiptDetailsService(month, userId);
 
         if(result.rows.length===0){
             return res.status(404).send("Receipt not found")

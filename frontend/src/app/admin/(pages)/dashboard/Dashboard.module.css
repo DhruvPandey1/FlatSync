@@ -1,35 +1,35 @@
-.container{
+.container {
     animation: fadeIn 0.5s ease-out;
 }
 
-.header{
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2.5rem;
 }
 
-.header h1{
+.header h1 {
     font-size: 1.8rem;
     color: #0f172a;
     font-weight: 800;
 }
 
-.header p{
+.header p {
     color: #64748b;
     margin-top: 4px;
 }
 
 
 
-.statsGrid{
+.statsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2.5rem;
 }
 
-.card{
+.card {
     background: white;
     padding: 1.5rem;
     border-radius: 16px;
@@ -37,31 +37,31 @@
     border: 1px solid #f1f5f9;
 }
 
-.cardTitle{
+.cardTitle {
     font-size: 0.8rem;
     font-weight: 700;
     color: #94a3b8;
     text-transform: uppercase;
 }
 
-.card h2{
+.card h2 {
     font-size: 1.75rem;
     margin: 10px 0;
 }
 
-.cardTrend{
+.cardTrend {
     font-size: 0.85rem;
     font-weight: 600;
     color: #64748b;
 }
 
-.dashboardGrid{
+.dashboardGrid {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 2rem;
 }
 
-.recentActivity{
+.recentActivity {
     background: white;
     padding: 1.5rem;
     border-radius: 16px;
@@ -70,24 +70,24 @@
     margin-top: 2rem;
 }
 
-.recentActivity h3{
+.recentActivity h3 {
     font-size: 1.1rem;
     color: #1e293b;
     margin-bottom: 1.5rem;
     font-weight: 700;
 }
 
-.table{
+.table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
 }
 
-.table thead tr{
+.table thead tr {
     border-bottom: 2px solid #f1f5f9;
 }
 
-.table th{
+.table th {
     padding: 12px 15px;
     font-size: 0.85rem;
     font-weight: 700;
@@ -96,7 +96,7 @@
     letter-spacing: 0.05rem;
 }
 
-.table td{
+.table td {
     padding: 16px 15px;
     font-size: 0.95rem;
     color: #334155;
@@ -104,15 +104,15 @@
     vertical-align: middle;
 }
 
-.table tbody tr{
+.table tbody tr {
     transition: background-color 0.2s ease;
 }
 
-.table tbody tr:hover{
+.table tbody tr:hover {
     background-color: #f8fafc;
 }
 
-.statusPaid{
+.statusPaid {
     background-color: #dcfce7;
     color: #16a34a;
     padding: 6px 12px;
@@ -122,7 +122,7 @@
     text-transform: uppercase;
 }
 
-.statusPending{
+.statusPending {
     background-color: #fee2e2;
     color: #dc2626;
     padding: 6px 12px;
@@ -133,26 +133,28 @@
 }
 
 @keyframes fadeIn {
-    form{
+    form {
         opacity: 0;
         transform: translateY(10px);
     }
-    to{
+
+    to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
 @media (max-width:1024px) {
-    .dashboardGrid{
+    .dashboardGrid {
         grid-template-columns: 1fr;
     }
-    .recentActivity{
+
+    .recentActivity {
         overflow-x: auto;
         padding: 1rem;
     }
 
-    .table{
+    .table {
         min-width: 500px;
     }
 }

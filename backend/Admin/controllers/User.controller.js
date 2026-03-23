@@ -29,7 +29,7 @@ const createUser=async(req,res)=>{
 
         await transporter.sendMail(mailOptions);
 
-        res.json({...result.rows, message: "User created and password emailed successfully"});
+        res.json({user: result.rows[0], message: "User created and password emailed successfully"});
     }
     catch(err){
         res.status(500).json({message:"User Not Created",error:err.message})

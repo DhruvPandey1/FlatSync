@@ -1,7 +1,8 @@
 const express = require ("express");
 const passport = require ("passport");
-const pool = require ("../../db/db");
 const jwt=require('jsonwebtoken');
+const { getAdminByEmailService } = require('../../db/services/auth.service');
+
 
 const router = express.Router();
 
@@ -21,10 +22,7 @@ router.get("/googleAuth/callback", (req, res, next) => {
 
       const email = googleUser.email;
 
-      const result = await pool.query(
-        "SELECT * FROM users WHERE email = $1 AND role = $2",
-        [email, "ADMIN"],
-      );
+      const result = await getAdminByEmailService(email);
 
       const admin = result.rows[0];
 

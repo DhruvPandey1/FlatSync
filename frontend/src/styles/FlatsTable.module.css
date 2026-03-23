@@ -2,7 +2,7 @@
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .filterBar {
@@ -28,44 +28,47 @@
   color: #0f172a;
 }
 
-.table { 
-    width: 100%; 
-    border-collapse: collapse; 
-    text-align: left; 
-}
-.table th { 
-    padding: 1rem; 
-    background: #f1f5f9; 
-    font-size: 0.8rem; 
-    text-transform: uppercase; 
-    color: #64748b; 
-}
-.table td { 
-    padding: 1rem; 
-    border-bottom: 1px solid #f8fafc; 
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
 }
 
+.table th {
+  padding: 1rem;
+  background: #f1f5f9;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #64748b;
+}
 
-
-.noData { 
-    text-align: center; 
-    padding: 3rem; 
-    color: #94a3b8; 
+.table td {
+  padding: 1rem;
+  border-bottom: 1px solid #f8fafc;
 }
 
 
-.topBar { 
-    display: flex; 
-    justify-content: space-between; 
-    padding: 1rem; 
-    background: #fff; 
+
+.noData {
+  text-align: center;
+  padding: 3rem;
+  color: #94a3b8;
 }
-.addBtn { 
-    background: #0f172a; 
-    color: white; 
-    padding: 10px 20px; 
-    border-radius: 8px; 
-    cursor: pointer; 
+
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background: #fff;
+}
+
+.addBtn {
+  background: #0f172a;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .pagination {
@@ -86,26 +89,28 @@
   color: #0f172a;
 }
 
-.pagination button:disabled { 
-    opacity: 0.5; 
-    cursor: not-allowed; 
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.actions { 
-    display: flex; 
-    gap: 8px; 
+.actions {
+  display: flex;
+  gap: 8px;
 }
-.editBtn { 
-    color: #2563eb; 
-    background: #eff6ff; 
-    border: none; 
-    padding: 4px 10px; 
-    border-radius: 4px; 
+
+.editBtn {
+  color: #2563eb;
+  background: #eff6ff;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 4px;
 }
-.deleteBtn { 
-    color: #dc2626; 
-    background: #fef2f2; 
-    border: none; 
-    padding: 4px 10px; 
-    border-radius: 4px; 
+
+.deleteBtn {
+  color: #dc2626;
+  background: #fef2f2;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 4px;
 }

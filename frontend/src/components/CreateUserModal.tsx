@@ -34,9 +34,11 @@ export default function CreateUserModal() {
       });
 
       if (res.ok) {
-        setMessage({ text: 'User created successfully', type: 'success' });
+        const data = await res.json();
+        const userId = data.user?.id || 'Unknown';
+        setMessage({ text: `User created successfully! ID: ${userId}. Please create their flat.`, type: 'success' });
         setFormData({ name: '', email: '', role: 'RESIDENT' });
-        setTimeout(() => setIsOpen(false), 2000);
+        setTimeout(() => setIsOpen(false), 5000);
       } else {
         const errorData = await res.json().catch(() => ({}));
         setMessage({ text: errorData.detail || 'Failed to create user', type: 'error' });

@@ -61,16 +61,7 @@ export default function ProfileForm({initialData}:{initialData:any}){
                 )}   
             </form>
 
-            <div className={styles.logoutWrapper}>
-                <button
-                    className={styles.logoutBtn}
-                    onClick={async()=>{
-                        if(confirm("Are you sure you want to logout?")){
-                            await logoutAction();
-                        }
-                    }}
-                >Logout</button>
-            </div>
+
         </div>
         
     )
