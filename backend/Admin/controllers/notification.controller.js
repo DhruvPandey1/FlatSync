@@ -1,4 +1,4 @@
-const { notificationHistoryService, sendNotificationService } = require('../../db/services/notification.service');
+const { notificationHistoryService, sendNotificationService, createNotificationsService } = require('../../db/services/notification.service');
 const admin = require('../config/firebaseAdmin');
 
 const getNotifiactionHistory=async (req, res) => {
@@ -10,26 +10,38 @@ const getNotifiactionHistory=async (req, res) => {
     }
 }
 
-
-
 const sendNotification = async (req, res) => {
-    const { title, body, type } = req.body;
-    
-    const result = await sendNotificationService(type);
+    try {
+        const { title, body, type } = req.body;
+        
+        const result = await sendNotificationService(type);
 
-    const tokens = result.rows.map(r => r.fcm_token);
+        const tokens = [];
+        const userIds = [];
 
-    if (tokens.length === 0) return res.status(404).send("No registered devices");
+        result.rows.forEach(r => {
+            if (r.fcm_token) tokens.push(r.fcm_token);
+            if (r.id) userIds.push(r.id);
+        });
 
-    const message = {
-        notification: { title, body },
-        tokens: tokens,
-    };
+        if (tokens.length === 0) return res.status(404).json({ error: "No registered devices" });
 
-    const response = await admin.messaging().sendEachForMulticast(message);
-    res.json({ success: true, sentCount: response.successCount });
+        const message = {
+            notification: { title, body },
+            tokens: tokens,
+        };
+
+        const response = await admin.messaging().sendEachForMulticast(message);
+        
+        if (userIds.length > 0) {
+            await createNotificationsService(userIds, title, body);
+        }
+
+        res.json({ success: true, sentCount: response.successCount });
+    } catch (err) {
+         res.status(500).json({ error: "Failed to send notification" , message: err.message});
+    }
 };
-
 
 module.exports={
     getNotifiactionHistory,

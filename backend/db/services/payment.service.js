@@ -37,8 +37,22 @@ const manualPaymentService=async(record_id,amount_paid,method)=>{
     await db.query('COMMIT');
 }
 
+
+const getPaymentDetailsAllService=async(userId)=>{
+    const res=await db.query(`
+                SELECT 
+                    (SELECT SUM(amount_due) FROM subscription_records WHERE flat_id=f.id AND status='PENDING') as total_pending_debt
+                FROM flats f
+                WHERE f.owner_id=$1
+                `,
+                [userId]
+            );
+    return res
+}
+
 module.exports={
     paymentFlatService,
     pendingPaymentRecordService,
-    manualPaymentService
+    manualPaymentService,
+    getPaymentDetailsAllService
 }

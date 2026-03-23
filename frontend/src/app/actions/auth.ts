@@ -29,3 +29,9 @@ export async function logoutAction() {
     cookieStore.delete('token');
     redirect('/login');
 }
+
+export async function logoutAdmin() {
+    const cookieStore = await cookies();
+    cookieStore.delete('admin_token');
+    redirect('/admin/login');
+}

@@ -36,10 +36,10 @@ export default function AddEditFlatModal({ isOpen, onClose, editData, refreshDat
         <h3>{editData ? "Edit Flat" : "Add New Flat"}</h3>
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.inputGroup}>
-            <input type="text" placeholder="Flat Number" value={form.flat_number} onChange={e => setForm({...form, flat_number: e.target.value})} />
-            <input type="text" placeholder="Wing" value={form.wing} onChange={e => setForm({...form, wing: e.target.value})} />
-            <input type="text" placeholder="Owner ID" value={form.owner_id} onChange={e => setForm({...form, owner_id: e.target.value})} />
-            <input type="number" placeholder="Plan Type ID" value={form.type_id} onChange={e => setForm({...form, type_id: e.target.value})} />
+            <input type="text" placeholder="Flat Number" value={form.flat_number || ''} onChange={e => setForm({...form, flat_number: e.target.value})} />
+            <input type="text" placeholder="Wing" value={form.wing || ''} onChange={e => setForm({...form, wing: e.target.value})} />
+            <input type="text" placeholder="Owner ID" value={form.owner_id || ''} onChange={e => setForm({...form, owner_id: e.target.value})} />
+            <input type="number" placeholder="Plan Type ID" value={form.type_id || ''} onChange={e => setForm({...form, type_id: e.target.value})} />
           </div>
           <div className={styles.btns}>
              <button type="button" onClick={onClose}>Cancel</button>

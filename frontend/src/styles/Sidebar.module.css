@@ -1,4 +1,4 @@
-.sidebar{
+.sidebar {
     width: 250px;
     height: 100vh;
     position: fixed;
@@ -12,30 +12,30 @@
     z-index: 100;
 }
 
-.adminBg{
+.adminBg {
     background-color: #0f172a;
     color: white;
 }
 
-.userBg{
+.userBg {
     background-color: #ffffff;
     color: #1e293b;
     border-right: 1px solid #e2e8f0;
 }
 
-.brand{
+.brand {
     padding: 0 2rem 2rem;
     font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: -0.5px;
 }
 
-.nav{
+.nav {
     display: flex;
     flex-direction: column;
 }
 
-.link{
+.link {
     padding: 1rem 2rem;
     text-decoration: none;
     font-weight: 500;
@@ -44,21 +44,65 @@
     transition: 0.2s;
 }
 
-.link:hover{
+.link:hover {
     opacity: 1;
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-.adminBg .active{
+.adminBg .active {
     background: #2563eb;
     color: white;
     opacity: 1;
     border-right: 4px solid #fff;
 }
 
-.userBg .active{
+.userBg .active {
     background: #eff6ff;
     color: #2563eb;
     opacity: 1;
     font-weight: 700;
+}
+
+.logoutButton {
+    margin-top: auto;
+    padding: 1rem 2rem;
+    padding-bottom: 2rem;
+}
+
+
+.logoutBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.logoutIcon {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.adminLogout {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+}
+
+.adminLogout:hover {
+    background-color: rgba(239, 68, 68, 0.2);
+}
+
+.userLogout {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.userLogout:hover {
+    background-color: #fca5a5;
 }

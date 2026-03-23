@@ -18,9 +18,11 @@ export default async function AdminProfilePage() {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <h1>Account Settings</h1>
-        <p>Manage your administrative profile and security.</p>
+      <header className={styles.header} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div>
+          <h1>Account Settings</h1>
+          <p>Manage your administrative profile and security.</p>
+        </div>
       </header>
 
       <div className={styles.content}>

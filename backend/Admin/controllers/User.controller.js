@@ -5,14 +5,14 @@ const { createUserService,getAdminDetailsService, updateAdminDetailsService } = 
 
 const createUser=async(req,res)=>{
     try{
-        const {full_name,email,role,password}=req.body
+        const {name,email,role,password}=req.body
         const hashedPassword = await bcrypt.hash(password, 10);
-        const result=await createUserService(email,full_name,role,hashedPassword);
+        const result=await createUserService(email,name,role,hashedPassword);
 
         res.json({...result.rows,hashedPassword:password});
     }
     catch(err){
-        res.status(500).json({message:"User Not Created"})
+        res.status(500).json({message:"User Not Created",error:err.message})
     }
     
 }

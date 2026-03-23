@@ -1,63 +1,21 @@
-.form {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-}
+.container { padding: 2.5rem; max-width: 800px; }
+.header h1 { font-size: 2rem; color: #0f172a; margin-bottom: 0.5rem; }
+.header p { color: #64748b; margin-bottom: 2rem; }
 
-.section h3 {
-    font-size: 1.1rem;
-    color: #1e293b;
-    margin-bottom: 1.5rem;
-}
+.form { background: white; padding: 2rem; border-radius: 12px; border: 1px solid #e2e8f0; }
+.section h3 { font-size: 1.1rem; color: #1e293b; margin-bottom: 1.5rem; }
 
-.inputGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1.2rem;
-}
+.inputGroup { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.2rem; }
+.inputGroup label { font-size: 0.85rem; font-weight: 600; color: #475569; }
+.inputGroup input { padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; }
+.inputGroup input:focus { border-color: #2563eb; box-shadow: 0 0 0 2px #dbeafe; }
 
-.inputGroup label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #475569;
-}
-
-.inputGroup input {
-    padding: 0.75rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    outline: none;
-}
-
-.inputGroup input:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 2px #dbeafe;
-}
-
-.disabled {
-    background: #f1f5f9;
-    cursor: not-allowed;
-}
-
-.divider {
-    margin: 2rem 0;
-    border: 0;
-    border-top: 1px solid #f1f5f9;
-}
+.disabled { background: #f1f5f9; cursor: not-allowed; }
+.divider { margin: 2rem 0; border: 0; border-top: 1px solid #f1f5f9; }
 
 .saveBtn {
-    background: #0f172a;
-    color: white;
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
+  background: #0f172a; color: white; border: none; padding: 0.8rem 2rem;
+  border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.2s;
 }
+.saveBtn:hover { background: #334155; }
 
-.saveBtn:hover {
-    background: #334155;
-}

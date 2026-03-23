@@ -26,6 +26,14 @@ const deleteFlatService=async(id)=>{
     await db.query('UPDATE flats SET is_active=false WHERE id=$1',[id]);
 }
 
+const editFlatService = async (id, flat_number, wing, owner_id, type_id) => {
+    const res = await db.query(
+        'UPDATE flats SET flat_number=$1, wing=$2, owner_id=$3, type_id=$4 WHERE id=$5 RETURNING *',
+        [flat_number, wing, owner_id, type_id, id]
+    );
+    return res;
+}
+
 const searchFlatsService=async(q,wing,params)=>{
     let query=`
         SELECT f.*,u.full_name,u.email
@@ -54,5 +62,6 @@ module.exports={
     getAllFlatsService,
     addFlatService,
     deleteFlatService,
-    searchFlatsService
+    searchFlatsService,
+    editFlatService
 }

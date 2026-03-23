@@ -19,7 +19,7 @@ export default function ProfileForm({ initialData }: any) {
       return;
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/update-profile`, {
+    const res = await fetch('http://localhost:5000/api/admin/update-profile', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       credentials:"include",

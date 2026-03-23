@@ -1,12 +1,5 @@
 const db=require('../../db/db');
-const Razorpay=require('razorpay');
-const crypto=require('crypto');
-const PDFDocument=require('pdfkit');
 
-// const rzp=new Razorpay({
-//     key_id:process.env.RAZORPAY_KEY_ID,
-//     key_secret:process.env.RAZORPAY_KEY_SECRET
-// });
 
 
 const getPaymentDetails=async(req,res)=>{
@@ -45,58 +38,66 @@ const getPaymentDetails=async(req,res)=>{
 
 }
 
-const createOrder=async(req,res)=>{
-    const {amount}=req.body;
-    const options={
-        amount:amount*100,
-        currency:"INR",
-        receipt:`receipt_${Date.now()}`
-    };
+const mockPayment = async (req, res) => {
+    const { month, isCumulative } = req.body;
+    const userId = req.user.id;
 
-    try{
-        const order=await rzp.orders.create(options);
-        res.json(order);
-    }
-    catch(err){
-        res.status(500).send(err);
-    }
-}
-
-const verifyPayment=async(req,res)=>{
-    const {razorpay_order_id,razorpay_payment_id,razorpay_signature,month,isCumulative}=req.body;
-    const userId=req.headers['x-user-id'];
-
-    const hmac=crypto.createHmac('sha256',process.env.RAZORPAY_KEY_SECRET);
-    hmac.update(razorpay_order_id+"|"+razorpay_payment_id);
-    const generated_signature=hmac.digest('hex');
-
-    if(generated_signature===razorpay_signature){
-        if(isCumulative){
-            await db.query('UPDATE subscription_records SET status="PAID",transaction_id=$1 WHERE user_id=$2 AND status="PENDING"',[razorpay_payment_id,userId]);
-        }
-        else{
-            await db.query('UPDATE subscription_records SET status="PAID",transaction_id=$1 WHERE user_id=$2 AND billing_month=$3',[razorpay_payment_id,userId,month]);
+    const client = await db.connect();
+    try {
+        await client.query('BEGIN');
+        
+        let pendingRecords;
+        if(isCumulative) {
+            pendingRecords = await client.query(
+                `SELECT sr.id, sr.amount_due FROM subscription_records sr JOIN flats f ON sr.flat_id = f.id WHERE f.owner_id = $1 AND sr.status = 'PENDING'`, 
+                [userId]
+            );
+        } else {
+            pendingRecords = await client.query(
+                `SELECT sr.id, sr.amount_due FROM subscription_records sr JOIN flats f ON sr.flat_id = f.id WHERE f.owner_id = $1 AND sr.billing_month = $2 AND sr.status = 'PENDING'`, 
+                [userId, month]
+            );
         }
 
-        res.json({success:true})
-    }
-    else{
-        res.status(400).json({success:false})
+        const transactionId = `TXN_${Date.now()}_${Math.floor(Math.random()*1000)}`;
+
+        for (const record of pendingRecords.rows) {
+            await client.query(
+                `INSERT INTO payments (record_id, amount_paid, method, transaction_id) VALUES ($1, $2, 'UPI', $3)`,
+                [record.id, record.amount_due, transactionId]
+            );
+            await client.query(
+                `UPDATE subscription_records SET status = 'PAID' WHERE id = $1`,
+                [record.id]
+            );
+        }
+
+        await client.query('COMMIT');
+        res.json({success: true, transactionId});
+    } catch(err) {
+        await client.query('ROLLBACK');
+        console.error(err);
+        res.status(500).json({success: false, error: err.message});
+    } finally {
+        client.release();
     }
 }
 
 const downloadReceipt=async(req,res)=>{
-    const recordId=req.params.id;
+    const month=req.params.id;
 
     try{
         const result=await db.query(`
-            SELECT sr.*,u.full_name,u.email,f.flat_number,f.wing
-            FROM subscription_records sr
+            SELECT sr.*,u.full_name,u.email,f.flat_number,f.wing,p.transaction_id,p.amount_paid
+            FROM payments p 
+            JOIN subscription_records sr ON p.record_id=sr.id
             JOIN flats f ON sr.flat_id=f.id
-            JOIN users u ON f.user_id=u.id
-            WHERE sr.id=$1
-            `,[recordId]
+            JOIN users u ON f.owner_id=u.id
+            WHERE sr.billing_month=$1
+            `,[month]
         );
+
+        console.log(result)
 
         if(result.rows.length===0){
             return res.status(404).send("Receipt not found")
@@ -140,7 +141,6 @@ const downloadReceipt=async(req,res)=>{
 
         doc.fillColor('#64748b').text('FLAT DETAILS', 350, detailsTop);
         doc.fillColor('#0f172a').fontSize(12).text(`Flat ${data.flat_number} - ${data.wing} Wing`, 350, detailsTop + 15);
-        doc.fontSize(10).text(`Area: ${data.area_sqft} Sq.Ft`, 350, detailsTop + 30);
 
         doc.moveDown(4);
         const tableTop = 240;
@@ -151,12 +151,12 @@ const downloadReceipt=async(req,res)=>{
 
         const rowTop = tableTop + 30;
         doc.fillColor('#0f172a').fontSize(11).text('Monthly Maintenance Charges', 60, rowTop);
-        doc.text(`${data.month} ${data.year}`, 250, rowTop);
-        doc.text(`INR ${data.amount}`, 480, rowTop);
+        doc.text(`${month}`, 250, rowTop);
+        doc.text(`INR ${data.amount_paid}`, 480, rowTop);
 
         doc.moveTo(350, rowTop + 30).lineTo(550, rowTop + 30).stroke('#e2e8f0');
         doc.fontSize(13).text('Total Amount Paid', 350, rowTop + 45);
-        doc.fillColor('#16a34a').text(`INR ${data.amount}`, 480, rowTop + 45);
+        doc.fillColor('#16a34a').text(`INR ${data.amount_paid}`, 480, rowTop + 45);
 
         doc.moveDown(6);
         doc.fillColor('#f8fafc').rect(50, doc.y, 500, 60).fill();
@@ -176,7 +176,6 @@ const downloadReceipt=async(req,res)=>{
 }
 module.exports={
     getPaymentDetails,
-    createOrder,
-    verifyPayment,
+    mockPayment,
     downloadReceipt
 }

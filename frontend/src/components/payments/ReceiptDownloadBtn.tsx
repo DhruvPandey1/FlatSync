@@ -2,7 +2,6 @@
 
 export default function ReceiptDownloadBtn({month}:{month:string}){
     const handleDownload =async ()=>{
-        // window.open(`${process.env.NEXT_PUBLIC_API_URL}/user/subscriptions/${month}/download`,'_blank');
         const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/subscriptions/${month}/download`,{
             method:"GET",
             credentials:"include"

@@ -5,7 +5,6 @@ import { cookies } from "next/headers";
 
 export async function updateProfile(formData:FormData,intialData:any) {
     const cookieStore=await cookies();
-    // const userId=cookieStore.get('session_id')?.value;
     const userId="64e155fc-c947-48d7-9814-bbff912e1874"
 
 
