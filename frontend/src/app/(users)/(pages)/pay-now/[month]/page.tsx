@@ -11,7 +11,6 @@ async function getPaymentDetails(month:string,isCumulative:boolean) {
         },
         cache:'no-store'
     })
-
     return res.ok? await res.json():null;
 }
 

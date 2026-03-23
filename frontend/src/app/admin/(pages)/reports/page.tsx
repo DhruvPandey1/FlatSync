@@ -16,7 +16,6 @@ export default async function ReportsPage({ searchParams }: any) {
   const date = new Date();
   const month = await(searchParams.month) || (date.getMonth() + 1).toString();
   const year = await(searchParams.year) || date.getFullYear().toString();
-
   const summary = await getReportSummary(month, year);
 
   return (

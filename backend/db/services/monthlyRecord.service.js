@@ -7,17 +7,39 @@ const getMonthlyRecordsService=async(month,year)=>{
         JOIN flats f ON f.owner_id=u.id 
         LEFT JOIN subscription_records sr ON sr.flat_id=f.id
         LEFT JOIN payments p ON sr.id = p.record_id
-        AND sr.billing_month::char = $1 AND sr.billing_month::char = $2
+        AND EXTRACT(MONTH FROM sr.billing_month) = $1 AND EXTRACT(YEAR FROM sr.billing_month) = $2
     `, [month, year]);
     return res;
 }
 
 const exportReportService=async(month,year)=>{
-    const res=await db.query('SELECT * FROM payments WHERE month=$1 AND year=$2', [month, year]);
+    const res=await db.query('SELECT * FROM payments WHERE EXTRACT(MONTH FROM paid_at) = $1 AND EXTRACT(YEAR FROM paid_at) = $2', [month, year]);
+
     return res;
 }
 
+const getPaidPayemntService=async(month,year)=>{
+    const res=await db.query(`
+            SELECT SUM(amount_paid) as total_paid
+            FROM payments 
+            WHERE EXTRACT(MONTH FROM paid_at) = $1 AND EXTRACT(YEAR FROM paid_at) = $2
+        `,[month,year])
+    return res
+    
+}
+
+const getPendingPaymentService=async(month,year)=>{
+    const res=await db.query(`
+            SELECT SUM(amount_due) as total_due
+            FROM subscription_records
+            WHERE EXTRACT(MONTH FROM billing_month) = $1 AND EXTRACT(YEAR FROM billing_month) = $2 AND status = 'PENDING'
+        `,[month,year]);
+    
+    return res
+}
 module.exports={
     getMonthlyRecordsService,
-    exportReportService
+    exportReportService,
+    getPaidPayemntService,
+    getPendingPaymentService
 }

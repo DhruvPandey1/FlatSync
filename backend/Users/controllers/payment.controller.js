@@ -11,7 +11,7 @@ const PDFDocument=require('pdfkit');
 
 const getPaymentDetails=async(req,res)=>{
     const {month,all}=req.query;
-    const userId=req.headers['x-user-id'];
+    const userId=req.user.id
 
     try{
         if(all==='true'){
@@ -23,17 +23,7 @@ const getPaymentDetails=async(req,res)=>{
                 `,
                 [userId]
             );
-
-            // const pending_month=await db.query(`
-            //     SELECT 
-            //         (SELECT billing_month FROM subscription_records WHERE flat_id=f.id AND status='PENDING' ORDER BY billing_month DESC) as pending_month
-            //     FROM flats f
-            //     WHERE f.owner_id=$1
-            //     `,[userId]
-            // );
-            res.json({total_amount:amount.rows[0].total_pending_debt
-                // pending_month:pending_month.rows[0].pending_month
-            });
+            res.json({total_amount:amount.rows[0].total_pending_debt});
         }
 
         else{
@@ -45,6 +35,7 @@ const getPaymentDetails=async(req,res)=>{
                 WHERE sr.billing_month=$1 AND f.owner_id=$2
                 `,[month,userId]
             );
+
             res.json({total_amount:result.rows[0]?.amount_due});
         }
     }
@@ -114,11 +105,22 @@ const downloadReceipt=async(req,res)=>{
         const data=result.rows[0];
 
         const doc=new PDFDocument({margin:50});
+        const buffers = [];
+        doc.on('data', buffers.push.bind(buffers));
 
-        res.setHeader('Content-Type','application/pdf');
-        res.setHeader('Content-Disposition',`attachment; filename=Receipt_${data.billing_month}.pdf`)
+        doc.on('end', () => {
+            const pdfData = Buffer.concat(buffers);
 
-        doc.pipe(res);
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader(
+                'Content-Disposition',
+                `attachment; filename="Receipt_${data.billing_month || 'receipt'}.pdf"`
+            );
+            res.setHeader('Content-Length', pdfData.length);
+
+            res.send(pdfData);
+        });
+
 
         doc.fillColor('#1e293b').fontSize(22).text('SOCIETY CONNECT',{align:'right'});
         doc.fontSize(10).fillColor('#64748b').text('Maintenance & Utility Receipt',{align:'right'});

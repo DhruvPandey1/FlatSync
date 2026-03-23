@@ -2,6 +2,8 @@
 import { cookies } from 'next/headers';
 import styles from './Dashboard.module.css';
 import { redirect } from 'next/navigation';
+import GenerateMonthlyBillButton from '@/components/generateMonthlyBillButton';
+import AdminStatsChart from '@/components/AdminStatsChart';
 
 async function getAdminStats() {
     const cookieStore= await cookies();
@@ -31,7 +33,7 @@ export default async function AdminDashboard(){
                     <h1>Society Statistics</h1>
                     <p>Real-time data</p>
                 </div>
-                <button className={styles.generateBtn}>+ Generate Monthly Bills</button>
+                <GenerateMonthlyBillButton/>
             </header>
 
             <div className={styles.statsGrid}>
@@ -77,6 +79,10 @@ export default async function AdminDashboard(){
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            <div style={{ marginTop: "20px" }}>
+                <AdminStatsChart stats={data.stats} />
             </div>
         </div>
     )

@@ -19,6 +19,7 @@ export default async function MonthlyRecordsPage({ searchParams }: any) {
   const {month} = await searchParams || (date.getMonth() + 1).toString();
   const {year} = await searchParams || date.getFullYear().toString();
 
+
   const records = await getMonthlyData(month, year);
 
   return (

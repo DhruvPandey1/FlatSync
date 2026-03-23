@@ -12,7 +12,6 @@ export async function updateProfile(formData:FormData,intialData:any) {
     const email=formData.get('email')||intialData.email;
     const full_name=formData.get('name') || intialData.full_name;
     const password=formData.get('password') || intialData.password;
-    console.log(full_name,email,password)
 
     try{
         const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile`,{
