@@ -26,7 +26,7 @@ export default function FCMHandler({ authToken }: any) {
           });
 
           const token = await getToken(messaging, {
-            vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY
+            vapidKey: "BHfuUZyP8Nrpu9rlXMtv056qG5mnqfvi1M8aS0YBBDH53n7G64bnrdYgtXXeECsbEMfdh2OhcV0hxlKXKQoH7_U"
           })
 
           if (token) {

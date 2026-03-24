@@ -3,21 +3,13 @@ importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compa
 
 // Ye wahi config hai jo tune frontend mein use ki hai
 const firebaseConfig = {
-
-  apiKey: process.env.NEXT_PUBLIC_FB_API_KEY,
-
-  authDomain: process.env.NEXT_PUBLIC_FB_AUTH_DOMAIN,
-
-  projectId: process.env.NEXT_PUBLIC_FB_PROJECT_ID,
-
-  storageBucket: process.env.NEXT_PUBLIC_FB_STORAGE_BUCKET,
-
-  messagingSenderId: process.env.NEXT_PUBLIC_FB_MESSAGE_SENDER_ID,
-
-  appId: process.env.NEXT_PUBLIC_FB_APP_ID,
-
-  measurementId: process.env.NEXT_PUBLIC_FB_MESUREMENT_ID
-
+  apiKey: "AIzaSyB8mGsYEFxpuR1lLmLuS19tZH07-FyiNLw",
+  authDomain: "flatsync-e39f0.firebaseapp.com",
+  projectId: "flatsync-e39f0",
+  storageBucket: "flatsync-e39f0.firebasestorage.app",
+  messagingSenderId: "619139046007",
+  appId: "1:619139046007:web:f42b553b42f942f65dc472",
+  measurementId: "G-HZKHKDPGWH"
 };
 
 firebase.initializeApp(firebaseConfig);
