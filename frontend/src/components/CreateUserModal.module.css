@@ -1,4 +1,4 @@
-/* Button Trigger */
+
 .triggerButton {
   display: inline-flex;
   align-items: center;
@@ -23,7 +23,7 @@
   height: 1.2rem;
 }
 
-/* Modal Overlay */
+
 .modalOverlay {
   position: fixed;
   inset: 0;
@@ -43,7 +43,7 @@
   to { opacity: 1; }
 }
 
-/* Modal Content */
+
 .modalContent {
   background: white;
   border: 1px solid #f1f5f9;
@@ -63,7 +63,7 @@
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Header */
+
 .modalHeader {
   display: flex;
   align-items: center;
@@ -93,7 +93,7 @@
   color: #0f172a;
 }
 
-/* Form */
+
 .formContainer {
   padding: 1.5rem 2rem;
   display: flex;
@@ -144,7 +144,7 @@
   color: #94a3b8;
 }
 
-/* Messages */
+
 .message {
   padding: 0.75rem 1rem;
   border-radius: 8px;
@@ -164,7 +164,7 @@
   border: 1px solid #fecaca;
 }
 
-/* Footer Actions */
+
 .modalFooter {
   display: flex;
   align-items: center;

@@ -27,7 +27,7 @@ export default function AddEditFlatModal({ isOpen, onClose, editData, refreshDat
 
     if (res.ok) {
       refreshData();
-      router.refresh(); // Refresh stats cards
+      router.refresh();
       onClose();
     }
   };

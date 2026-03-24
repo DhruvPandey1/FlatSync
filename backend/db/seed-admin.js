@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '../.env' }); // Load .env from backend root if needed
+require('dotenv').config({path:'../.env'});
 const db = require('./db');
 
 const seedAdmin = async () => {

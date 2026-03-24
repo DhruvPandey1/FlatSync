@@ -42,7 +42,7 @@ export default function CreateUserModal() {
         setMessage({ text: `User created successfully! ID: ${userId}. Please create their flat.`, type: 'success' });
         setFormData({ name: '', email: '', role: 'RESIDENT' });
         router.refresh();
-        setTimeout(() => setIsOpen(false), 5000);
+        router.refresh();
       } else {
         const errorData = await res.json().catch(() => ({}));
         setMessage({ text: errorData.detail || 'Failed to create user', type: 'error' });
@@ -100,7 +100,7 @@ export default function CreateUserModal() {
               )}
 
               <div className={styles.modalFooter}>
-                <Button variant="outline" type="button" className={styles.cancelButton} onClick={() => setIsOpen(false)}>Cancel</Button>
+                <Button variant="outline" type="button" className={styles.cancelButton} onClick={() => { setIsOpen(false); setMessage({text:'', type:''}); }}>{message.type === 'success' ? 'Close' : 'Cancel'}</Button>
                 <Button type="submit" className={styles.submitButton} disabled={isLoading} isLoading={isLoading}>
                   Create User
                 </Button>
