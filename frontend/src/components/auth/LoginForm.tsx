@@ -2,6 +2,7 @@
 
 import { loginAction } from "@/app/actions/auth";
 import { useState } from "react"
+import toast from 'react-hot-toast';
 import styles from './LoginForm.module.css'
 import Googlepng from '../../../public/assets/Google.png'
 
@@ -20,6 +21,7 @@ export default function LoginForm({type}:Role){
         const result =await loginAction(formData);
         if(result?.error){
             setError(result.error);
+            toast.error(result.error);
             setLoading(false);
         }
     }
@@ -30,7 +32,11 @@ export default function LoginForm({type}:Role){
 
     return(
         type==="RESIDENT"?
-        (<form action={handleSubmit} className={styles.form}>
+        (<form onSubmit={async (e) => {
+            e.preventDefault();
+            const fd = new FormData(e.currentTarget);
+            await handleSubmit(fd);
+        }} className={styles.form}>
             {error && <div className={styles.error}>{error}</div>}
             <div className={styles.inputGroup}>
                 <label htmlFor="email">Email</label>
@@ -54,18 +60,6 @@ export default function LoginForm({type}:Role){
             />
             <span>Sign in with Google</span>
           </button>
-          
-          <div className={styles.divider}>
-            <span>OR</span>
-          </div>
-
-          <form className={styles.manualForm}>
-            <input type="email" placeholder="Admin Email" required />
-            <input type="password" placeholder="Password" required />
-            <button type="submit" className={styles.loginBtn}>
-              Login with Password
-            </button>
-          </form>
         </div>
     )
     )

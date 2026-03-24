@@ -42,12 +42,12 @@ export default async function SubscriptionDetail({params}:{
                 <div className={styles.breakdown}>
                     <div className={styles.row}>
                         <span>Flat Maintenance</span>
-                        <span>Rs.{record.amount_due}</span>
+                        <span>₹{record.amount_due}</span>
                     </div>
 
                     <div className={`${styles.row} ${styles.total}`}>
                         <span>Total Payable</span>
-                        <span>Rs.{record.amount_due}</span>
+                        <span>₹{record.amount_due}</span>
                     </div>
                 </div>
                 {isPaid?(

@@ -21,7 +21,15 @@ export async function updateProfile(formData:FormData,intialData:any) {
             body:JSON.stringify({email,password,full_name})
         });
 
-        if(!res.ok) return{success:false,error:"Failed to update"};
+        if(!res.ok) {
+            let errMsg = "Failed to update profile";
+            try {
+                const errorData = await res.json();
+                if (errorData.error) errMsg = errorData.error;
+                else if (errorData.message) errMsg = errorData.message;
+            } catch (e) {}
+            return { success: false, error: errMsg };
+        }
 
         revalidatePath('/profile');
 

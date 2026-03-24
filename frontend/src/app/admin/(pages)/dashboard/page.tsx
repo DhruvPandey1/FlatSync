@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import GenerateMonthlyBillButton from '@/components/generateMonthlyBillButton';
 import AdminStatsChart from '@/components/AdminStatsChart';
 import CreateUserModal from '@/components/CreateUserModal';
+import { Card } from '@/components/ui/Card';
 
 async function getAdminStats() {
     const cookieStore= await cookies();
@@ -41,22 +42,22 @@ export default async function AdminDashboard(){
             </header>
 
             <div className={styles.statsGrid}>
-                <div className={styles.card}>
+                <Card className={styles.card}>
                     <p className={styles.cardTitle}>Total collection</p>
-                    <h2 style={{color:"#10b981"}}>Rs. {data.stats.total_collected}</h2>
+                    <h2 style={{color:"#10b981"}}>₹{data.stats.total_collected || 0}</h2>
                     <span className={styles.cardTrend}>This Month</span>
-                </div>
+                </Card>
                 
-                <div className={styles.card}>
+                <Card className={styles.card}>
                     <p className={styles.cardTitle}>Pending Dues</p>
-                    <h2 style={{color:"#ef4444"}}>Rs. {data.stats.total_pending}</h2>
-                </div>
+                    <h2 style={{color:"#ef4444"}}>₹{data.stats.total_pending || 0}</h2>
+                </Card>
 
-                <div className={styles.card}>
+                <Card className={styles.card}>
                     <p className={styles.cardTitle}>Total Residents</p>
-                    <h2 style={{color:"#3b82f6"}}>{data.stats.total_flats}</h2>
+                    <h2 style={{color:"#3b82f6"}}>{data.stats.total_flats || 0}</h2>
                     <span className={styles.cardTrend}>Registered Flats</span>
-                </div>
+                </Card>
             </div>
             <div className={styles.dashboardGrid}>
                 <div className={styles.recentActivity}>
@@ -72,14 +73,20 @@ export default async function AdminDashboard(){
                         </thead>
 
                         <tbody>
-                            {data.recent_payments.map((p:any)=>(
-                                <tr key={p.id}>
-                                    <td>{p.flat_number}</td>
-                                    <td>{p.full_name}</td>
-                                    <td>{p.amount_due}</td>
-                                    <td><span className={p.status==='PAID'?styles.statusPaid:styles.statusPending}>{p.status}</span></td>
+                            {data.recent_payments && data.recent_payments.length > 0 ? (
+                                data.recent_payments.map((p:any)=>(
+                                    <tr key={p.id}>
+                                        <td>{p.flat_number}</td>
+                                        <td>{p.full_name}</td>
+                                        <td>{p.amount_due}</td>
+                                        <td><span className={p.status==='PAID'?styles.statusPaid:styles.statusPending}>{p.status}</span></td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan={4} style={{ textAlign: "center", padding: "2rem" }}>No recent payments.</td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     </table>
                 </div>

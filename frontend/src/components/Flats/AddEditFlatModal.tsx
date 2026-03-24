@@ -1,8 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import styles from "@/styles/FlatModal.module.css";
+import { Button } from "@/components/ui/Button";
 
 export default function AddEditFlatModal({ isOpen, onClose, editData, refreshData }: any) {
+  const router = useRouter();
   const [form, setForm] = useState({ flat_number: "", wing: "", owner_id: "", type_id: "" });
 
   useEffect(() => {
@@ -13,9 +16,9 @@ export default function AddEditFlatModal({ isOpen, onClose, editData, refreshDat
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const method = editData ? 'PUT' : 'POST';
-    const endpoint = editData ? `/api/admin/edit-flat/${editData.id}` : '/api/admin/add-flats';
+    const endpoint = editData ? `/admin/edit-flat/${editData.id}` : '/admin/add-flats';
     
-    const res = await fetch(`http://localhost:5000${endpoint}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
       method,
       headers: { 'Content-Type': 'application/json' },
       credentials:"include",
@@ -24,6 +27,7 @@ export default function AddEditFlatModal({ isOpen, onClose, editData, refreshDat
 
     if (res.ok) {
       refreshData();
+      router.refresh(); // Refresh stats cards
       onClose();
     }
   };
@@ -42,8 +46,8 @@ export default function AddEditFlatModal({ isOpen, onClose, editData, refreshDat
             <input type="number" placeholder="Plan Type ID" value={form.type_id || ''} onChange={e => setForm({...form, type_id: e.target.value})} />
           </div>
           <div className={styles.btns}>
-             <button type="button" onClick={onClose}>Cancel</button>
-             <button type="submit" className={styles.primary}>Save</button>
+             <Button variant="outline" type="button" onClick={onClose}>Cancel</Button>
+             <Button type="submit" className={styles.primary}>Save</Button>
           </div>
         </form>
       </div>

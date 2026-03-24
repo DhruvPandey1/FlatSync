@@ -1,6 +1,11 @@
 "use client"
 import styles from "@/styles/GenerateMonthlyBills.module.css"
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/Button';
+
 export default function GenerateMonthlyBillButton(){
+    const router = useRouter();
 
     const handleBills=async()=>{
         const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/generate-monthly-bills`,{
@@ -10,9 +15,14 @@ export default function GenerateMonthlyBillButton(){
             body: JSON.stringify({ month:new Date().toLocaleDateString('en-CA', {timeZone: 'Asia/Kolkata'}) })
         })
         const data=await res.json()
-        alert(data.ok?data.message:data.error)
+        if (res.ok) {
+            toast.success(data.message);
+            router.refresh();
+        } else {
+            toast.error(data.error || "Failed to generate bills");
+        }
     }
     return(
-        <button className={styles.generateBtn} type="button" onClick={handleBills}>+ Generate Monthly Bills</button>
+        <Button className={styles.generateBtn} type="button" onClick={handleBills}>+ Generate Monthly Bills</Button>
     )
 }

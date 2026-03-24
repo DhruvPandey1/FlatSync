@@ -4,6 +4,7 @@ import styles from './dashboard.module.css'
 import PayButton from "@/components/PayButton";
 import FCMHandler from "@/components/fcm/FCMHandler";
 import DismissNotificationButton from "@/components/Notifications/DismissNotificationButton";
+import { Card } from "@/components/ui/Card";
 
 
 async function getDashboardData(){
@@ -40,24 +41,24 @@ export default async function UserDashboard() {
             </header>
 
             {!flat_info ? (
-                <div className={styles.card} style={{ textAlign: 'center', padding: '3rem 1rem', margin: '2rem 0' }}>
+                <Card className={styles.card} style={{ textAlign: 'center', padding: '3rem 1rem', margin: '2rem 0' }}>
                     <h3>No Flat Assigned</h3>
                     <p style={{ marginTop: '1rem', color: '#666' }}>You have not been assigned to a flat yet. Please contact the administration.</p>
-                </div>
+                </Card>
             ) : (
                 <div className={styles.statsGrid}>
-                    <div className={styles.card}>
+                    <Card className={styles.card}>
                         <h3>Current Status</h3>
                         <span className={flat_info.current_month_status==='PAID'?styles.paid:styles.pending}>
-                            {flat_info.current_month_status}
+                            {flat_info.current_month_status || 'N/A'}
                         </span>
-                    </div>
+                    </Card>
 
-                    <div className={styles.card}>
+                    <Card className={styles.card}>
                         <h3>Outstanding Dues</h3>
-                        <p className={styles.amount}>Rs. {flat_info.total_pending_debt}</p>
+                        <p className={styles.amount}>₹{flat_info.total_pending_debt || 0}</p>
                         <PayButton amount={flat_info.total_pending_debt} status={flat_info.current_month_status} link={`/pay-now/${new Date().getMonth()}?type=all`}/>
-                    </div>
+                    </Card>
                 </div>
             )}
 

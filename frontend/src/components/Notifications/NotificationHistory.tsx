@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import styles from '@/styles/NotificationHistory.module.css';
 
-export default function NotificationHistory() {
+export default function NotificationHistory({ refreshTrigger }: { refreshTrigger?: number }) {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -10,7 +10,8 @@ export default function NotificationHistory() {
     async function fetchHistory() {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/notification-history`, {
-          credentials:"include"
+          credentials:"include",
+          cache:"no-store"
         });
         const data = await res.json();
         setHistory(data);
@@ -21,7 +22,7 @@ export default function NotificationHistory() {
       }
     }
     fetchHistory();
-  }, []);
+  }, [refreshTrigger]);
 
   if (loading) return <p>Loading history...</p>;
 

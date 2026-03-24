@@ -1,12 +1,14 @@
 "use client";
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 import styles from './ProfileForm.module.css';
 
 export default function ProfileForm({ initialData }: any) {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: initialData?.full_name || '',
     email: initialData?.email || '',
-    oldPassword: '',
     newPassword: '',
     confirmPassword: ''
   });
@@ -14,20 +16,22 @@ export default function ProfileForm({ initialData }: any) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (formData.newPassword !== formData.confirmPassword) {
-      alert("New passwords do not match!");
+    if (formData.newPassword && formData.newPassword !== formData.confirmPassword) {
+      toast.error("New passwords do not match!");
       return;
     }
 
-    const res = await fetch('http://localhost:5000/api/admin/update-profile', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/update-profile`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       credentials:"include",
-      body: JSON.stringify(formData)
+      body: JSON.stringify({ name: formData.name, newPassword: formData.newPassword })
     });
 
-    if (res.ok) alert("Profile updated successfully!");
-    else alert("Failed to update profile.");
+    if (res.ok) {
+        toast.success("Profile updated successfully!");
+        router.refresh();
+    } else toast.error("Failed to update profile.");
   };
 
   return (
@@ -54,17 +58,11 @@ export default function ProfileForm({ initialData }: any) {
       <div className={styles.section}>
         <h3>Security</h3>
         <div className={styles.inputGroup}>
-          <label>Current Password</label>
-          <input 
-            type="password" 
-            onChange={(e) => setFormData({...formData, oldPassword: e.target.value})} 
-          />
-        </div>
-        <div className={styles.inputGroup}>
-          <label>New Password</label>
+          <label>New Password (Optional)</label>
           <input 
             type="password" 
             onChange={(e) => setFormData({...formData, newPassword: e.target.value})} 
+            placeholder="Leave blank to keep current password"
           />
         </div>
         <div className={styles.inputGroup}>

@@ -48,7 +48,7 @@ export default async function SubscriptionsPage() {
                                             year:'numeric',
                                         })}
                                     </td>
-                                    <td className={styles.amountCol}>Rs.{record.amount_due}</td>
+                                    <td className={styles.amountCol}>₹{record.amount_due}</td>
                                     <td>
                                         <span className={record.status==='PAID'?styles.statusPaid:styles.statusPending}>
                                             {record.status}

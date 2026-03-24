@@ -26,21 +26,18 @@ const getAdminDetailsService=async(adminId)=>{
     return res
 }
 
-const updateAdminDetailsService=async(name,oldPassword,newPassword,adminId)=>{
-    const res= await db.query(
-        'SELECT password_hash FROM users WHERE id=$1',
-        [adminId]
-    );
-
-    if(res.rows[0].password_hash!==oldPassword) return false;
-
-    const update=await db.query(
-        'UPDATE users SET full_name=$1,password_hash=$2 WHERE id=$3',
-        [name,newPassword,adminId]
-    )
-
-    return update
-    
+const updateAdminDetailsService=async(name,newPasswordHash,adminId)=>{
+    if (newPasswordHash) {
+        return await db.query(
+            'UPDATE users SET full_name=$1, password_hash=$2 WHERE id=$3 RETURNING *',
+            [name, newPasswordHash, adminId]
+        );
+    } else {
+        return await db.query(
+            'UPDATE users SET full_name=$1 WHERE id=$2 RETURNING *',
+            [name, adminId]
+        );
+    }
 }
 const getAdminByEmailService = async(email) => {
     const res = await db.query(

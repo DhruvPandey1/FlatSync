@@ -16,7 +16,7 @@ router.get("/googleAuth/callback", (req, res, next) => {
     try {
       if (err || !googleUser) {
         return res.redirect(
-          "http://localhost:3000/admin/login?error=Google login failed",
+          `${process.env.FRONTEND_URL || 'http://localhost:3000'}/admin/login?error=Google login failed`,
         );
       }
 
@@ -27,7 +27,7 @@ router.get("/googleAuth/callback", (req, res, next) => {
       const admin = result.rows[0];
 
       if (!admin) {
-        return res.redirect("http://localhost:3000/admin/login?error=User not found");
+        return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/admin/login?error=User not found`);
       }
 
 
@@ -47,9 +47,9 @@ router.get("/googleAuth/callback", (req, res, next) => {
         sameSite: "lax",
       });
 
-      return res.redirect("http://localhost:3000/admin/dashboard");
+      return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/admin/dashboard`);
     } catch (err) {
-      return res.redirect("http://localhost:3000/admin/login?error=Server error");
+      return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/admin/login?error=Server error`);
     }
   })(req, res, next);
 });

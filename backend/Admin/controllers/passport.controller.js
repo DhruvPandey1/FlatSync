@@ -11,7 +11,7 @@ function configurePassport(passport){
       {
         clientID: process.env.AUTH_GOOGLE_ID,
         clientSecret: process.env.AUTH_GOOGLE_SECRET,
-        callbackURL: "http://localhost:5000/api/googleAuth/callback",
+        callbackURL: `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/googleAuth/callback`,
       },
       async (accessToken, refreshToken, profile, done) => {
         try {

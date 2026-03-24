@@ -38,7 +38,7 @@ export default async function PayNowPage({
 
                 <div className={styles.amountCard}>
                     <span className={styles.label}> Total Payable</span>
-                    <h2 className={styles.totalAmount}>Rs. {data.total_amount}</h2>
+                    <h2 className={styles.totalAmount}>₹{data.total_amount}</h2>
                 </div>
 
                 <div className={styles.breakdown}>

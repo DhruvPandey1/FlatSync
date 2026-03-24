@@ -39,6 +39,8 @@ DB_NAME=flatsync_db
 # Server
 PORT=5000
 JWT_SECRET=your_super_secret_jwt_key
+BACKEND_URL=http://localhost:5000
+FRONTEND_URL=http://localhost:3000
 
 # Email (Nodemailer for sending passwords)
 EMAIL_USER=your_gmail@gmail.com
@@ -96,12 +98,13 @@ npm run dev
 Follow these steps to understand how FlatSync works from start to finish:
 
 ### 1. Admin Login
-- To log in as an Admin, your email needs to be in the database first.
-- Run this SQL query to add yourself as an admin:
-  ```sql
-  INSERT INTO users (email, full_name, role) VALUES ('your_google_email@gmail.com', 'Admin User', 'ADMIN');
+- To log in as an Admin, your email must be securely whitelisted in the database first.
+- We have provided a secure CLI script to seed your admin account without needing direct SQL access:
+  ```bash
+  cd app/backend
+  node db/seed-admin.js "your_google_email@gmail.com" "Admin Name"
   ```
-- Go to `http://localhost:3000/admin/login` and sign in with Google.
+- Once seeded, go to `http://localhost:3000/admin/login` and sign in cleanly with Google OAuth.
 - You will now have access to the FlatSync Admin Dashboard.
 
 ### 2. Creating a Resident

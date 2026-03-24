@@ -51,13 +51,18 @@ const getAdminDetails=async(req,res)=>{
 
 const updateAdminDetails=async(req,res)=>{
     try{
-        const {name,oldPassword,newPassword}=req.body;
+        const {name,newPassword}=req.body;
         const adminId=req.admin.id;
 
-        const result = await updateAdminDetailsService(name,oldPassword,newPassword,adminId);
+        let finalHash = null;
+        if (newPassword) {
+            finalHash = await bcrypt.hash(newPassword, 10);
+        }
+
+        const result = await updateAdminDetailsService(name, finalHash, adminId);
 
         if(!result){
-            return res.status(401).json("Unauthorized the creadentials are incorrect")
+            return res.status(401).json("Update failed")
         }
 
         res.json("Update is successfull");

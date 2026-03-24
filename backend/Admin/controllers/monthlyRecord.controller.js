@@ -41,18 +41,21 @@ const exportReport=async (req, res) => {
             const statusX = 450;
             
             doc.rect(50, tableTop, 500, 20).fill('#f1f5f9');
-            doc.fillColor('#0f172a').fontSize(10).text('Transaction ID', itemX + 10, tableTop + 6);
-            doc.text('Amount Paid', amountX, tableTop + 6);
+            doc.fillColor('#0f172a').fontSize(10).text('Flat / Txn ID', itemX + 10, tableTop + 6);
+            doc.text('Status / Amount', amountX, tableTop + 6);
             doc.text('Date', statusX, tableTop + 6);
             
             let currentY = tableTop + 30;
             let totalAmount = 0;
 
             data.rows.forEach(payment => {
-                totalAmount += parseFloat(payment.amount_paid);
-                doc.fillColor('#334155').fontSize(9).text(payment.transaction_id || 'N/A', itemX + 10, currentY);
-                doc.text(`INR ${payment.amount_paid}`, amountX, currentY);
-                doc.text(new Date(payment.paid_at).toLocaleDateString(), statusX, currentY);
+                const isPaid = payment.status === 'PAID';
+                const amt = isPaid ? parseFloat(payment.amount_paid || 0) : parseFloat(payment.amount_due || 0);
+                if (isPaid) totalAmount += amt;
+
+                doc.fillColor('#334155').fontSize(9).text(`${payment.flat_number} - ${payment.transaction_id || 'N/A'}`, itemX + 10, currentY);
+                doc.text(`${payment.status || 'N/A'} ₹${amt}`, amountX, currentY);
+                doc.text(payment.paid_at ? new Date(payment.paid_at).toLocaleDateString() : 'N/A', statusX, currentY);
                 currentY += 20;
                 
                 if (currentY > 700) {
@@ -64,7 +67,7 @@ const exportReport=async (req, res) => {
             doc.moveTo(50, currentY).lineTo(550, currentY).stroke('#e2e8f0');
             doc.moveDown(1);
             doc.fontSize(12).fillColor('#0f172a').text('Total Collected:', 250, currentY + 10);
-            doc.fillColor('#16a34a').text(`INR ${totalAmount}`, amountX, currentY + 10);
+            doc.fillColor('#16a34a').text(`₹ ${totalAmount}`, amountX, currentY + 10);
 
             doc.end();
         } catch (err) {

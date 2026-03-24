@@ -1,8 +1,13 @@
 "use client";
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 import styles from '@/styles/NotificationForm.module.css';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
 
-export default function NotificationForm() {
+export default function NotificationForm({ onSuccess }: { onSuccess?: () => void }) {
+  const router = useRouter();
   const [msg, setMsg] = useState({ title: '', body: '', type: 'ALL' });
   const [loading, setLoading] = useState(false);
 
@@ -18,14 +23,17 @@ export default function NotificationForm() {
     });
 
     if (res.ok) {
-      alert("Notification sent successfully!");
+      toast.success("Notification sent successfully!");
       setMsg({ title: '', body: '', type: 'ALL' });
+      if (onSuccess) onSuccess();
+    } else {
+      toast.error('Failed to send notification');
     }
     setLoading(false);
   };
 
   return (
-    <div className={styles.card}>
+    <Card className={styles.card}>
       <h3>Create New Broadcast</h3>
       <form onSubmit={sendNotification} className={styles.form}>
         <div className={styles.group}>
@@ -56,10 +64,10 @@ export default function NotificationForm() {
           </select>
         </div>
 
-        <button type="submit" disabled={loading} className={styles.sendBtn}>
-          {loading ? 'Sending...' : 'Send Notification'}
-        </button>
+        <Button type="submit" disabled={loading} isLoading={loading} className={styles.sendBtn}>
+          Send Notification
+        </Button>
       </form>
-    </div>
+    </Card>
   );
 }

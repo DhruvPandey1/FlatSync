@@ -2,6 +2,7 @@
 
 import styles from '@/styles/PaymentTerminal.module.css';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/navigation';
 
@@ -42,15 +43,16 @@ export default function PaymentTerminal({amount,month,isCumulative}:PaymentProps
             if (verifyRes.ok && data.success) {
                 setStep('SUCCESS');
                 setTxnId(data.transactionId);
+                toast.success('Payment successful!');
                 setTimeout(() => {
                     router.push(`/dashboard?payment=success`);
                 }, 2000);
             } else {
-                alert("Payment processing failed. " + (data.error || ''));
+                toast.error("Payment processing failed. " + (data.error || ''));
                 setStep('IDLE');
             }
         } catch (error: any) {
-            alert("Error: " + error.message);
+            toast.error("Error: " + error.message);
             setStep('IDLE');
         } finally {
             setLoading(false);
@@ -79,7 +81,7 @@ export default function PaymentTerminal({amount,month,isCumulative}:PaymentProps
                 {step === 'PROCESSING' ? (
                     <span className={styles.loader}>Securely Processing...</span>
                 ) : (
-                    `Pay Rs. ${amount}`
+                    `Pay ₹${amount}`
                 )}
             </button>
             <p className={styles.disclaimer}>

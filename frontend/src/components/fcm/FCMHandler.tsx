@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { app } from "@/lib/firebase";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function FCMHandler({ authToken }: any) {
+  const router = useRouter();
   useEffect(() => {
     const setupFCM = async () => {
       try {
@@ -13,6 +16,14 @@ export default function FCMHandler({ authToken }: any) {
 
         if (permission === "granted") {
           const messaging = getMessaging(app);
+
+          onMessage(messaging, (payload) => {
+            console.log("FCM Payload received:", payload);
+            const title = payload.notification?.title || payload.data?.title || "New Notification";
+            const body = payload.notification?.body || payload.data?.body || "";
+            toast.success(`${title}: ${body}`, { duration: 6000 });
+            router.refresh();
+          });
 
           const token = await getToken(messaging, {
             vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY

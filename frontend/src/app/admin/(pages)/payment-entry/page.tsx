@@ -1,8 +1,12 @@
 "use client";
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 import styles from './PaymentEntry.module.css';
+import { Button } from '@/components/ui/Button';
 
 export default function PaymentEntry() {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [flatData, setFlatData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -10,15 +14,22 @@ export default function PaymentEntry() {
   const handleSearch = async () => {
     if(!searchTerm) return;
     setLoading(true);
+    setFlatData(null);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/pending-by-flat?q=${searchTerm}`,{
         credentials:"include",
         cache:"no-store"
       });
-      const data = await res.json();
-      setFlatData(data);
+      if (res.ok) {
+        const data = await res.json();
+        setFlatData(data);
+      } else if (res.status === 404) {
+        toast.error("Flat does not exist.");
+      } else {
+        toast.error("Search failed. Flat might not have pending dues.");
+      }
     } catch (err) {
-      alert("Flat not found or has no pending dues.");
+      toast.error("Network error occurred.");
     } finally {
       setLoading(false);
     }
@@ -36,11 +47,14 @@ export default function PaymentEntry() {
       });
       
       if(res.ok) {
-        alert("Payment recorded successfully!");
+        toast.success("Payment recorded successfully!");
         handleSearch(); 
+        router.refresh();
+      } else {
+        toast.error("Payment failed");
       }
     } catch (err) {
-      alert("Payment failed");
+      toast.error("Payment failed");
     }
   };
 
@@ -58,9 +72,9 @@ export default function PaymentEntry() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={handleSearch} disabled={loading}>
-          {loading ? 'Searching...' : 'Find Pending Dues'}
-        </button>
+        <Button onClick={handleSearch} disabled={loading} isLoading={loading}>
+          Find Pending Dues
+        </Button>
       </div>
 
       {flatData && (
@@ -79,9 +93,9 @@ export default function PaymentEntry() {
                     <strong>{rec.billing_month}</strong>
                     <span>Amount: ₹{rec.amount_due}</span>
                   </div>
-                  <button onClick={() => handleManualPay(rec.id, rec.amount_due)}>
+                  <Button size="sm" onClick={() => handleManualPay(rec.id, rec.amount_due)}>
                     Mark as Paid
-                  </button>
+                  </Button>
                 </div>
               ))
             ) : (

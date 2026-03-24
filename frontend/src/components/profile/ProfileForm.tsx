@@ -4,6 +4,7 @@ import { useState } from 'react';
 import styles from './ProfileForm.module.css';
 import { updateProfile } from '@/app/actions/userActions';
 import { logoutAction } from '@/app/actions/auth';
+import toast from 'react-hot-toast';
 
 export default function ProfileForm({initialData}:{initialData:any}){
     const [isEditing,setIsEditing]=useState(false);
@@ -23,8 +24,13 @@ export default function ProfileForm({initialData}:{initialData:any}){
             </div>
             <form action={
                 async (formData)=>{
-                    await updateProfile(formData,initialData);
-                    setIsEditing(false);
+                    const result = await updateProfile(formData,initialData);
+                    if (result.error) {
+                        toast.error(result.error);
+                    } else {
+                        toast.success("Profile updated successfully!");
+                        setIsEditing(false);
+                    }
                 }
             }>
                 <div className={styles.infoGrid}>

@@ -27,6 +27,9 @@ router.post('/generate-monthly-bills',async(req,res)=>{
     }
     try{
         const result=await generateMonthlyBills(month);
+        if (result.count === 0) {
+            return res.status(400).json({ error: "No bills remaining to be generated for this month." });
+        }
         res.json({
             message:`Successfully generated ${result.count} bills for ${month}.`
         });

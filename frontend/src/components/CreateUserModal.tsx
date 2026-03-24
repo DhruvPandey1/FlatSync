@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './CreateUserModal.module.css';
+import { Button } from '@/components/ui/Button';
 
 export default function CreateUserModal() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ text: '', type: '' });
@@ -38,6 +41,7 @@ export default function CreateUserModal() {
         const userId = data.user?.id || 'Unknown';
         setMessage({ text: `User created successfully! ID: ${userId}. Please create their flat.`, type: 'success' });
         setFormData({ name: '', email: '', role: 'RESIDENT' });
+        router.refresh();
         setTimeout(() => setIsOpen(false), 5000);
       } else {
         const errorData = await res.json().catch(() => ({}));
@@ -52,7 +56,7 @@ export default function CreateUserModal() {
 
   return (
     <>
-      <button 
+      <Button 
         className={styles.triggerButton} 
         onClick={() => setIsOpen(true)}
       >
@@ -60,7 +64,7 @@ export default function CreateUserModal() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
         </svg>
         Create New User
-      </button>
+      </Button>
 
       {isOpen && (
         <div className={styles.modalOverlay} onClick={() => setIsOpen(false)}>
@@ -96,10 +100,10 @@ export default function CreateUserModal() {
               )}
 
               <div className={styles.modalFooter}>
-                <button type="button" className={styles.cancelButton} onClick={() => setIsOpen(false)}>Cancel</button>
-                <button type="submit" className={styles.submitButton} disabled={isLoading}>
-                  {isLoading ? 'Creating...' : 'Create User'}
-                </button>
+                <Button variant="outline" type="button" className={styles.cancelButton} onClick={() => setIsOpen(false)}>Cancel</Button>
+                <Button type="submit" className={styles.submitButton} disabled={isLoading} isLoading={isLoading}>
+                  Create User
+                </Button>
               </div>
             </form>
           </div>
