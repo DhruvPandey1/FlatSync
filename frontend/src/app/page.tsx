@@ -35,7 +35,7 @@ export default function Home() {
                 </svg>
               </div>
               <h2>Admin Portal</h2>
-              <p>Manage society operations, billing, and resident information.</p>
+              <p>Manage FlatSync operations, billing, and resident information.</p>
               <span className={styles.cardAction}>Login as Admin &rarr;</span>
             </div>
           </Link>

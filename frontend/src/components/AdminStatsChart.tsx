@@ -23,7 +23,7 @@ export default function AdminStatsChart({ stats }: any) {
     labels: ["Collected", "Pending", "Flats"],
     datasets: [
       {
-        label: "Society Stats",
+        label: "FlatSync Stats",
         data: [
           stats.total_collected,
           stats.total_pending,

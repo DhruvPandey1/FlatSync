@@ -11,9 +11,8 @@ const getNotificationService =async(userId)=>{
 
 const notificationHistoryService=async()=>{
     const res=await db.query(
-        'SELECT id, user_id ,title, message, is_read, created_at FROM notifications ORDER BY created_at DESC LIMIT 10'
+        'SELECT MAX(CAST(id AS VARCHAR)) as id, title, message, MIN(created_at) as created_at FROM notifications GROUP BY title, message ORDER BY MIN(created_at) DESC LIMIT 10'
     );
-
     return res;
 }
 

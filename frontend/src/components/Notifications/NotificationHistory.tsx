@@ -42,7 +42,7 @@ export default function NotificationHistory() {
               </div>
               <p className={styles.historyBody}>{item.message}</p>
               <div className={styles.historyFooter}>
-                <span className={styles.tag}>{item.is_read?"Read":"Not Read"}</span>
+                <span className={styles.tag}>Broadcasted</span>
               </div>
             </div>
           ))

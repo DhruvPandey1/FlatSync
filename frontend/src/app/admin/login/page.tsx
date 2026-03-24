@@ -14,12 +14,12 @@ export default async function AdminLogin() {
     <div className={styles.container}>
       <div className={styles.loginCard}>
         <div className={styles.logoSection}>
-          <h1>Society Admin</h1>
+          <h1>FlatSync Admin</h1>
           <p>Sign in to manage flats and subscriptions</p>
         </div>        
         <LoginForm type="ADMIN"/>
         <footer className={styles.footer}>
-          <p>Protected by Society Subscription Management System</p>
+          <p>Protected by FlatSync Subscription Management System</p>
         </footer>
       </div>
     </div>

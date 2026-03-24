@@ -10,7 +10,7 @@ export default async function LoginPage(){
         <div className={styles.container}>
             <div className={styles.card}>
                 <h2>User Login</h2>
-                <p>Access your society dashboard</p>
+                <p>Access your FlatSync dashboard</p>
                 
             </div>
             <LoginForm type="RESIDENT"/>

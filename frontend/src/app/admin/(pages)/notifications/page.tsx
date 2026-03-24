@@ -7,7 +7,7 @@ export default function AdminNotifications() {
     <div className={styles.container}>
       <header className={styles.header}>
         <h1>Push Notifications</h1>
-        <p>Send payment reminders and society announcements to residents.</p>
+        <p>Send payment reminders and FlatSync announcements to residents.</p>
       </header>
 
       <div className={styles.grid}>

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import styles from './dashboard.module.css'
 import PayButton from "@/components/PayButton";
 import FCMHandler from "@/components/fcm/FCMHandler";
+import DismissNotificationButton from "@/components/Notifications/DismissNotificationButton";
 
 
 async function getDashboardData(){
@@ -67,6 +68,7 @@ export default async function UserDashboard() {
                         <div key={n.id} className={styles.note}>
                             <p>{n.message}</p>
                             <small>{new Date(n.created_at).toLocaleDateString()}</small>
+                            <DismissNotificationButton id={n.id} />
                         </div>
                     ))
                 ):(

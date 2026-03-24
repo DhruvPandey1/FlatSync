@@ -68,7 +68,7 @@ const downloadReceipt=async(req,res)=>{
         });
 
 
-        doc.fillColor('#1e293b').fontSize(22).text('SOCIETY CONNECT',{align:'right'});
+        doc.fillColor('#1e293b').fontSize(22).text('FLATSYNC',{align:'right'});
         doc.fontSize(10).fillColor('#64748b').text('Maintenance & Utility Receipt',{align:'right'});
         doc.moveDown(2);
 
@@ -110,7 +110,7 @@ const downloadReceipt=async(req,res)=>{
         doc.text(`Payment ID: ${data.transaction_id || 'N/A'}`, 60, doc.y - 20);
 
         doc.moveDown(5);
-        doc.fontSize(8).fillColor('#94a3b8').text('This is a digitally generated document. For any discrepancies, please contact the society office.', { align: 'center' });
+        doc.fontSize(8).fillColor('#94a3b8').text('This is a digitally generated document. For any discrepancies, please contact the FlatSync office.', { align: 'center' });
 
         doc.end();
 

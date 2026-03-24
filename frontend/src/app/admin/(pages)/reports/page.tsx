@@ -22,7 +22,7 @@ export default async function ReportsPage({ searchParams }: any) {
     <div className={styles.container}>
       <header className={styles.header}>
         <h1>Financial Reports</h1>
-        <p>Download and analyze society subscription data.</p>
+        <p>Download and analyze FlatSync subscription data.</p>
       </header>
 
       <ReportsClient 

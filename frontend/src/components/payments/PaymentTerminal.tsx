@@ -83,7 +83,7 @@ export default function PaymentTerminal({amount,month,isCumulative}:PaymentProps
                 )}
             </button>
             <p className={styles.disclaimer}>
-                By clicking, you agree to the society payment terms.
+                By clicking, you agree to the FlatSync payment terms.
             </p>
         </div>
     );

@@ -26,7 +26,7 @@ export default async function SubscriptionsPage() {
         <div className={styles.container}>
             <header className={styles.headers}>
                 <h1>My Bill History</h1>
-                <p>View and manage your monthly society dues</p>
+                <p>View and manage your monthly FlatSync dues</p>
             </header>
             <div className={styles.tableWrapper}>
                 <table className={styles.table}>

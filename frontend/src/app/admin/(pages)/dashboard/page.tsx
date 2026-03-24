@@ -31,7 +31,7 @@ export default async function AdminDashboard(){
         <div className={styles.container}>
             <header className={styles.header}>
                 <div>
-                    <h1>Society Statistics</h1>
+                    <h1>FlatSync Statistics</h1>
                     <p>Real-time data</p>
                 </div>
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
