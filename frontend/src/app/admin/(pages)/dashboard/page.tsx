@@ -1,7 +1,5 @@
-
 import { cookies } from 'next/headers';
 import styles from './Dashboard.module.css';
-import { redirect } from 'next/navigation';
 import GenerateMonthlyBillButton from '@/components/generateMonthlyBillButton';
 import AdminStatsChart from '@/components/AdminStatsChart';
 import CreateUserModal from '@/components/CreateUserModal';
@@ -10,7 +8,6 @@ import { Card } from '@/components/ui/Card';
 async function getAdminStats() {
     const cookieStore= await cookies();
     const token=cookieStore.get('admin_token')?.value
-    if(!token) redirect('/admin/login');
     
     const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/dashboard`,{
         cache:'no-store',

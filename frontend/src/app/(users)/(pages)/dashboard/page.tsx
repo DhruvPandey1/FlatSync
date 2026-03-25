@@ -1,5 +1,4 @@
 import { cookies } from "next/headers"
-import { redirect } from "next/navigation";
 import styles from './dashboard.module.css'
 import PayButton from "@/components/PayButton";
 import FCMHandler from "@/components/fcm/FCMHandler";
@@ -10,7 +9,7 @@ import { Card } from "@/components/ui/Card";
 async function getDashboardData(){
     const cookieStore=await cookies();
     const token=cookieStore.get('token')?.value;
-    if(!token) redirect('/login');
+
 
     const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/dashboard`,{
         headers:{

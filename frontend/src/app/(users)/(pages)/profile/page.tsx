@@ -1,13 +1,11 @@
 import { cookies } from 'next/headers'
 import styles from './profile.module.css'
-import { redirect } from 'next/navigation';
 import ProfileForm from '@/components/profile/ProfileForm';
 
 
 async function getUserProfile(){
     const cookieStore=await cookies();
     const token=cookieStore.get('token')?.value;
-    if(!token) redirect('/login');
 
     const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/fetch-profile`,{
         headers:{

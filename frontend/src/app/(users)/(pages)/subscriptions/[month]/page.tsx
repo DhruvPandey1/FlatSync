@@ -1,12 +1,11 @@
 import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { notFound} from "next/navigation";
 import styles from './SubscriptionDetail.module.css'
 import ReceiptDownloadBtn from "@/components/payments/ReceiptDownloadBtn";
 import PayButton from "@/components/PayButton";
 async function getRecordDetail(month:string){
     const cookieStore=await cookies();
     const token=cookieStore.get('token')?.value;
-    if(!token) redirect('/login');
     const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/subscriptions/${month}`,{
         headers:{
             'Authorization':`Bearer ${token}`
