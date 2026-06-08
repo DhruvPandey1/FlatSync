@@ -1,6 +1,6 @@
-const express = require ("express");
-const passport = require ("passport");
-const jwt=require('jsonwebtoken');
+const express = require("express");
+const passport = require("passport");
+const jwt = require('jsonwebtoken');
 const { getAdminByEmailService } = require('../../db/services/auth.service');
 
 
@@ -31,16 +31,15 @@ router.get("/googleAuth/callback", (req, res, next) => {
       }
 
 
-      const token=jwt.sign(
+      const token = jwt.sign(
         {
-          id:admin.id,
-          email:admin.email,
-          role:"ADMIN"
+          id: admin.id,
+          email: admin.email,
+          role: "ADMIN"
         },
         process.env.JWT_SECRET,
-        {expiresIn:"1d"}
+        { expiresIn: "1d" }
       );
-
       res.cookie("admin_token", token, {
         httpOnly: true,
         secure: false,
@@ -55,4 +54,4 @@ router.get("/googleAuth/callback", (req, res, next) => {
 });
 
 
-module.exports=router;
+module.exports = router;
