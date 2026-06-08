@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: ["main", "master"]
 
 env:
   REGISTRY: ghcr.io
@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    
+
     steps:
       - uses: actions/checkout@v4
 
@@ -61,6 +61,5 @@ jobs:
       - name: Trigger deployment
         run: |
           echo "Deployment step placeholder"
-          echo "Add your AWS ECS, EC2 SSH, or other deployment script here."
-          # Example for EC2 over SSH:
-          # ssh user@host "docker-compose -f docker-compose.staging.yml pull && docker-compose -f docker-compose.staging.yml up -d"
+          echo "Add  AWS ECS, EC2 SSH, or other deployment script here."
+          echo "Free Aws is Exhausted That's Why using general pipeline"
